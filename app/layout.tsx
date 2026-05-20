@@ -28,18 +28,11 @@ export const metadata: Metadata = {
     title:       'Marie H. Boddaert',
     description: 'Blogs, gedichten, kattenbellen en gevatte teksten. Op verzoek en aanvraag.',
     url:         BASE,
-    images: [{
-      url:    '/marie.png',
-      width:  400,
-      height: 400,
-      alt:    'Marie H. Boddaert',
-    }],
   },
   twitter: {
-    card:        'summary',
+    card:        'summary_large_image',
     title:       'Marie H. Boddaert',
     description: 'Blogs, gedichten, kattenbellen en gevatte teksten.',
-    images:      ['/marie.png'],
   },
   robots: {
     index:               true,

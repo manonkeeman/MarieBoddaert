@@ -7,33 +7,23 @@ export default function Icon() {
   return new ImageResponse(
     <div style={{
       width: '512px', height: '512px',
-      background: '#2A1A2A',         // schaduwkleur (90s offset)
+      borderRadius: '96px',
+      background: 'linear-gradient(135deg, #F7C5D1 0%, #DDD0F0 100%)',
       display: 'flex',
-      padding: '0 40px 40px 0',      // schaduw rechts-onder
+      alignItems: 'center',
+      justifyContent: 'center',
     }}>
-      {/* Hoofdvlak */}
       <div style={{
-        flex: 1,
-        background: 'linear-gradient(135deg, #F7C5D1 0%, #DDD0F0 100%)',
-        border: '16px solid #2A1A2A',
+        fontSize: 240,
+        fontWeight: 900,
+        color: '#2A1A2A',
         display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'column',
-        gap: 0,
+        letterSpacing: '-12px',
+        fontFamily: 'Arial Black, Arial, sans-serif',
+        lineHeight: 1,
+        paddingRight: '12px',
       }}>
-        {/* Initialen */}
-        <div style={{
-          display: 'flex',
-          fontFamily: 'Georgia, "Times New Roman", serif',
-          fontSize: 220,
-          fontWeight: 800,
-          color: '#2A1A2A',
-          letterSpacing: '-8px',
-          lineHeight: 1,
-        }}>
-          MB
-        </div>
+        MB
       </div>
     </div>
   )

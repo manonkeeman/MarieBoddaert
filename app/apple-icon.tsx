@@ -7,28 +7,23 @@ export default function AppleIcon() {
   return new ImageResponse(
     <div style={{
       width: '180px', height: '180px',
-      background: '#2A1A2A',
+      borderRadius: '40px',
+      background: 'linear-gradient(135deg, #F7C5D1 0%, #DDD0F0 100%)',
       display: 'flex',
-      padding: '0 14px 14px 0',
+      alignItems: 'center',
+      justifyContent: 'center',
     }}>
       <div style={{
-        flex: 1,
-        background: 'linear-gradient(135deg, #F7C5D1 0%, #DDD0F0 100%)',
-        border: '6px solid #2A1A2A',
+        fontSize: 88,
+        fontWeight: 900,
+        color: '#2A1A2A',
         display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
+        letterSpacing: '-4px',
+        fontFamily: 'Arial Black, Arial, sans-serif',
+        lineHeight: 1,
+        paddingRight: '4px',
       }}>
-        <div style={{
-          display: 'flex',
-          fontFamily: 'Georgia, "Times New Roman", serif',
-          fontSize: 78,
-          fontWeight: 800,
-          color: '#2A1A2A',
-          letterSpacing: '-3px',
-        }}>
-          MB
-        </div>
+        MB
       </div>
     </div>
   )
