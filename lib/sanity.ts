@@ -1,4 +1,4 @@
-import { createClient } from 'next-sanity'
+import { createClient } from '@sanity/client'
 
 export const sanityClient = createClient({
   projectId: 'xfgj8bxt',
@@ -9,12 +9,8 @@ export const sanityClient = createClient({
 
 export const allPostsQuery = `
   *[_type == "post"] | order(date desc) {
-    "slug":    slug.current,
-    title,
-    date,
-    excerpt,
-    content,
-    category,
+    "slug":   slug.current,
+    title, date, excerpt, content, category,
     "color":  coalesce(color, "#FAD5DA"),
     "emoji":  coalesce(emoji, "✍️")
   }
@@ -23,11 +19,7 @@ export const allPostsQuery = `
 export const postBySlugQuery = `
   *[_type == "post" && slug.current == $slug][0] {
     "slug":   slug.current,
-    title,
-    date,
-    excerpt,
-    content,
-    category,
+    title, date, excerpt, content, category,
     "color":  coalesce(color, "#FAD5DA"),
     "emoji":  coalesce(emoji, "✍️")
   }

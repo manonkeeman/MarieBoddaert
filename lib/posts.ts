@@ -54,11 +54,7 @@ function getMarkdownPostBySlug(slug: string): Post | undefined {
 
 async function getSanityPosts(): Promise<Post[]> {
   try {
-    const raw = await sanityClient.fetch(
-      allPostsQuery,
-      {},
-      { next: { revalidate: 3600 } }
-    )
+    const raw = await sanityClient.fetch(allPostsQuery)
     return (raw ?? []).map((p: any) => ({
       slug:            p.slug,
       title:           p.title ?? '',
@@ -78,11 +74,7 @@ async function getSanityPosts(): Promise<Post[]> {
 
 async function getSanityPostBySlug(slug: string): Promise<Post | undefined> {
   try {
-    const p = await sanityClient.fetch(
-      postBySlugQuery,
-      { slug },
-      { next: { revalidate: 3600 } }
-    )
+    const p = await sanityClient.fetch(postBySlugQuery, { slug })
     if (!p) return undefined
     return {
       slug:            p.slug,
