@@ -7,7 +7,7 @@ function formatDate(d: string) {
 }
 
 export default function PostCard({ post }: { post: Post }) {
-  const minutes = getReadingTime(post.content)
+  const minutes = getReadingTime(post.content, post.portableContent)
   return (
     <Link href={`/blog/${post.slug}`}>
       <article className="post-card" style={{ '--c': post.color } as React.CSSProperties}>

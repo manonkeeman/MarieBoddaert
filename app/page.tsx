@@ -3,8 +3,10 @@ import PostGrid from '@/components/PostGrid'
 import HeroSlider from '@/components/HeroSlider'
 import NewsletterBanner from '@/components/NewsletterBanner'
 
-export default function Home() {
-  const posts = getAllPosts()
+export const revalidate = 3600
+
+export default async function Home() {
+  const posts = await getAllPosts()
   return (
     <>
       <HeroSlider />

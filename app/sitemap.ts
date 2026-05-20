@@ -3,8 +3,10 @@ import { getAllPosts } from '@/lib/posts'
 
 const BASE = process.env.NEXT_PUBLIC_SITE_URL || 'https://marieboddaert.nl'
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const posts = getAllPosts()
+export const revalidate = 3600
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const posts = await getAllPosts()
 
   const staticPages: MetadataRoute.Sitemap = [
     { url: BASE,                    lastModified: new Date(), changeFrequency: 'daily',   priority: 1.0 },
@@ -16,10 +18,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ]
 
   const postPages: MetadataRoute.Sitemap = posts.map(post => ({
-    url: `${BASE}/blog/${post.slug}`,
-    lastModified: new Date(post.date),
-    changeFrequency: 'monthly',
-    priority: 0.8,
+    url:              `${BASE}/blog/${post.slug}`,
+    lastModified:     new Date(post.date),
+    changeFrequency:  'monthly',
+    priority:         0.8,
   }))
 
   return [...staticPages, ...postPages]

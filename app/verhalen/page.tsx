@@ -2,11 +2,11 @@ import { getAllPosts } from '@/lib/posts'
 import PostGrid from '@/components/PostGrid'
 import type { Metadata } from 'next'
 
+export const revalidate = 3600
 export const metadata: Metadata = { title: 'Verhalen — Marie H. Boddaert' }
 
-export default function Verhalen() {
-  const posts = getAllPosts().filter(p => p.category === 'Verhalen')
-
+export default async function Verhalen() {
+  const posts = (await getAllPosts()).filter(p => p.category === 'Verhalen')
   return (
     <>
       <div className="post-banner" style={{ backgroundColor: '#FAD5DA' }}>
