@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 import { getAllPosts } from '@/lib/posts'
 
-const BASE = process.env.NEXT_PUBLIC_SITE_URL || 'https://marieboddaert.nl'
+const BASE = process.env.NEXT_PUBLIC_SITE_URL || 'https://marie-boddaert.netlify.app'
 
 export const revalidate = 3600
 

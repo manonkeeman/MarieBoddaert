@@ -36,7 +36,9 @@
       "Bash(gh repo *)",
       "Bash(npm uninstall *)",
       "Bash(git push *)",
-      "Bash(git rm *)"
+      "Bash(git rm *)",
+      "Bash(sed -i '' \"s|'https://marieboddaert.nl'|'https://marie-boddaert.netlify.app'|g\" /Users/manonkeeman/WebstormProjects/manonit/MarieBoddaert/app/blog/\\\\[slug\\\\]/page.tsx)",
+      "Bash(sed -i '' \"s|'https://marieboddaert.nl'|'https://marie-boddaert.netlify.app'|g\" /Users/manonkeeman/WebstormProjects/manonit/MarieBoddaert/app/sitemap.ts)"
     ]
   }
 }

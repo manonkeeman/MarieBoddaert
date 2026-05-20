@@ -8,16 +8,18 @@ const nunito   = Nunito({ subsets: ['latin'], variable: '--font-nunito' })
 const playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-playfair' })
 const pacifico = Pacifico({ weight: '400', subsets: ['latin'], variable: '--font-pacifico' })
 
-const BASE = process.env.NEXT_PUBLIC_SITE_URL || 'https://marieboddaert.nl'
+const BASE = process.env.NEXT_PUBLIC_SITE_URL || 'https://marie-boddaert.netlify.app'
+
+const OG_TITLE       = 'Marie H. Boddaert — Verhalen, gedichten & kattenbellen'
+const OG_DESCRIPTION = 'Marie H. Boddaert schrijft verhalen, gedichten en gevatte teksten. Psychologe uit Leiden, geïnspireerd door mensen, culturen en karakters. Op verzoek en aanvraag.'
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE),
   title: {
-    default:  'Marie H. Boddaert',
+    default:  OG_TITLE,
     template: '%s — Marie H. Boddaert',
   },
-  description:
-    'Marie H. Boddaert schrijft blogs, gedichten, kattenbellen en gevatte teksten. Psychologe uit Leiden met een diepe interesse voor mensen, culturen en karakters.',
+  description: OG_DESCRIPTION,
   keywords: ['blog', 'gedichten', 'schrijven', 'kattenbellen', 'psychologie', 'Marie H. Boddaert', 'Leiden', 'content'],
   authors:  [{ name: 'Marie H. Boddaert', url: 'mailto:mh.boddaert@gmail.com' }],
   creator:  'Marie H. Boddaert',
@@ -25,14 +27,14 @@ export const metadata: Metadata = {
     type:        'website',
     locale:      'nl_NL',
     siteName:    'Marie H. Boddaert',
-    title:       'Marie H. Boddaert',
-    description: 'Blogs, gedichten, kattenbellen en gevatte teksten. Op verzoek en aanvraag.',
+    title:       OG_TITLE,
+    description: OG_DESCRIPTION,
     url:         BASE,
   },
   twitter: {
     card:        'summary_large_image',
-    title:       'Marie H. Boddaert',
-    description: 'Blogs, gedichten, kattenbellen en gevatte teksten.',
+    title:       OG_TITLE,
+    description: OG_DESCRIPTION,
   },
   robots: {
     index:               true,
