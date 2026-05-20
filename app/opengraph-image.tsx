@@ -1,16 +1,20 @@
 import { ImageResponse } from 'next/og'
-import { readFileSync } from 'fs'
-import { join } from 'path'
 
 export const alt = 'Marie H. Boddaert — Blog'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
-export default function Image() {
-  let photoSrc = ''
+const BASE = process.env.NEXT_PUBLIC_SITE_URL || 'https://marie-boddaert.netlify.app'
+
+export default async function Image() {
+  // Foto ophalen via URL (werkt in productie en lokaal)
+  let photoSrc: string | null = null
   try {
-    const photo = readFileSync(join(process.cwd(), 'public', 'marie.png'))
-    photoSrc = `data:image/png;base64,${photo.toString('base64')}`
+    const res = await fetch(`${BASE}/marie.png`)
+    if (res.ok) {
+      const buf = await res.arrayBuffer()
+      photoSrc = `data:image/png;base64,${Buffer.from(buf).toString('base64')}`
+    }
   } catch {}
 
   return new ImageResponse(
@@ -21,18 +25,15 @@ export default function Image() {
       padding: '64px 80px',
       position: 'relative', overflow: 'hidden',
     }}>
-      {/* Decoratieve cirkel */}
       <div style={{
         position: 'absolute', top: -160, left: -120,
         width: 440, height: 440, borderRadius: '50%',
         background: 'rgba(255,255,255,0.18)', display: 'flex',
       }} />
 
-      {/* Links: tekst */}
+      {/* Tekst links */}
       <div style={{ display: 'flex', flexDirection: 'column', flex: 1, zIndex: 1 }}>
-        <div style={{
-          display: 'flex', marginBottom: 28,
-        }}>
+        <div style={{ display: 'flex', marginBottom: 28 }}>
           <div style={{
             display: 'flex', border: '2px solid #2A1A2A',
             padding: '6px 20px', fontSize: 15, fontWeight: 700,
@@ -42,19 +43,19 @@ export default function Image() {
             Blog
           </div>
         </div>
-
-        <div style={{
-          display: 'flex', flexDirection: 'column',
-          fontFamily: 'Georgia, "Times New Roman", serif',
-          fontSize: 72, fontWeight: 800,
-          color: '#2A1A2A', lineHeight: 1.05, marginBottom: 24,
-        }}>
-          <span style={{ display: 'flex' }}>Marie H.</span>
-          <span style={{ display: 'flex' }}>Boddaert</span>
+        <div style={{ display: 'flex', flexDirection: 'column', marginBottom: 24 }}>
+          <span style={{
+            display: 'flex',
+            fontFamily: 'Georgia, serif', fontSize: 72, fontWeight: 800,
+            color: '#2A1A2A', lineHeight: 1.05,
+          }}>Marie H.</span>
+          <span style={{
+            display: 'flex',
+            fontFamily: 'Georgia, serif', fontSize: 72, fontWeight: 800,
+            color: '#2A1A2A', lineHeight: 1.05,
+          }}>Boddaert</span>
         </div>
-
         <div style={{ width: 100, height: 4, background: '#2A1A2A', marginBottom: 22, display: 'flex' }} />
-
         <div style={{ display: 'flex', gap: 12 }}>
           {['Blogs', 'Gedichten', 'Kattenbellen'].map(cat => (
             <div key={cat} style={{
@@ -68,15 +69,25 @@ export default function Image() {
         </div>
       </div>
 
-      {/* Rechts: foto (alleen als beschikbaar) */}
-      {photoSrc && (
+      {/* Foto rechts */}
+      {photoSrc ? (
         <div style={{ display: 'flex', zIndex: 1, flexShrink: 0, marginLeft: 60 }}>
-          <img
-            src={photoSrc}
-            width={260} height={260}
+          <img src={photoSrc} width={260} height={260}
             style={{ objectFit: 'cover', objectPosition: 'top',
               border: '3px solid #2A1A2A', boxShadow: '8px 8px 0 #2A1A2A' }}
           />
+        </div>
+      ) : (
+        <div style={{
+          display: 'flex', zIndex: 1, flexShrink: 0, marginLeft: 60,
+          width: 260, height: 260,
+          background: 'rgba(255,255,255,0.4)',
+          border: '3px solid #2A1A2A',
+          alignItems: 'center', justifyContent: 'center',
+          fontFamily: 'Georgia, serif', fontSize: 80, fontWeight: 800,
+          color: '#2A1A2A',
+        }}>
+          M
         </div>
       )}
     </div>

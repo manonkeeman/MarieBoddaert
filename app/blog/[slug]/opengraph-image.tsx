@@ -1,10 +1,10 @@
 import { ImageResponse } from 'next/og'
-import { readFileSync } from 'fs'
-import { join } from 'path'
 import { getAllPosts, getPostBySlug } from '@/lib/posts'
 
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
+
+const BASE = process.env.NEXT_PUBLIC_SITE_URL || 'https://marie-boddaert.netlify.app'
 
 export async function generateStaticParams() {
   const posts = await getAllPosts()
@@ -26,10 +26,13 @@ export default async function Image({ params }: { params: { slug: string } }) {
   }
   const lightColor = bgMap[color] ?? '#fef8fa'
 
-  let photoSrc = ''
+  let photoSrc: string | null = null
   try {
-    const photo = readFileSync(join(process.cwd(), 'public', 'marie.png'))
-    photoSrc = `data:image/png;base64,${photo.toString('base64')}`
+    const res = await fetch(`${BASE}/marie.png`)
+    if (res.ok) {
+      const buf = await res.arrayBuffer()
+      photoSrc = `data:image/png;base64,${Buffer.from(buf).toString('base64')}`
+    }
   } catch {}
 
   return new ImageResponse(
@@ -59,9 +62,8 @@ export default async function Image({ params }: { params: { slug: string } }) {
 
       <div style={{ display: 'flex', flex: 1, alignItems: 'flex-start' }}>
         <div style={{
-          fontSize, fontWeight: 800, color: '#2A1A2A',
-          lineHeight: 1.15,
-          fontFamily: 'Georgia, "Times New Roman", serif',
+          fontSize, fontWeight: 800, color: '#2A1A2A', lineHeight: 1.15,
+          fontFamily: 'Georgia, serif',
           maxWidth: '820px', display: 'flex', flexWrap: 'wrap',
         }}>
           {title}
@@ -73,23 +75,29 @@ export default async function Image({ params }: { params: { slug: string } }) {
         borderTop: '3px solid rgba(42,26,42,0.25)',
         paddingTop: 24, marginTop: 8,
       }}>
-        {photoSrc && (
+        {photoSrc ? (
           <img src={photoSrc} width={56} height={56}
             style={{ objectFit: 'cover', objectPosition: 'top',
               border: '2px solid #2A1A2A', marginRight: 16 }}
           />
+        ) : (
+          <div style={{
+            display: 'flex', width: 56, height: 56, marginRight: 16,
+            background: 'rgba(255,255,255,0.6)',
+            border: '2px solid #2A1A2A',
+            alignItems: 'center', justifyContent: 'center',
+            fontFamily: 'Georgia, serif', fontSize: 24, fontWeight: 800, color: '#2A1A2A',
+          }}>M</div>
         )}
         <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <div style={{ fontSize: 22, fontWeight: 800, color: '#2A1A2A',
-            display: 'flex', fontFamily: 'Georgia, serif' }}>
+          <div style={{ fontSize: 22, fontWeight: 800, color: '#2A1A2A', display: 'flex', fontFamily: 'Georgia, serif' }}>
             Marie H. Boddaert
           </div>
           <div style={{ fontSize: 15, color: '#6A5A6A', display: 'flex' }}>
             Blogs · Gedichten · Kattenbellen
           </div>
         </div>
-        <div style={{ marginLeft: 'auto', fontSize: 16, color: '#2A1A2A',
-          opacity: 0.45, fontWeight: 600, display: 'flex' }}>
+        <div style={{ marginLeft: 'auto', fontSize: 16, color: '#2A1A2A', opacity: 0.45, fontWeight: 600, display: 'flex' }}>
           marie-boddaert.netlify.app
         </div>
       </div>
