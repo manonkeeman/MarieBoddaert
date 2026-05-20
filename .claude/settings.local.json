@@ -32,7 +32,10 @@
       "Bash(npx *)",
       "Read(//Users/manonkeeman/**)",
       "Read(//Users/manonkeeman/.config/**)",
-      "Read(//Users/manonkeeman/Library/Preferences/**)"
+      "Read(//Users/manonkeeman/Library/Preferences/**)",
+      "Bash(gh repo *)",
+      "Bash(npm uninstall *)",
+      "Bash(git push *)"
     ]
   }
 }
