@@ -22,7 +22,17 @@
       "Bash(netlify --version)",
       "Bash(npm list *)",
       "Bash(git add *)",
-      "Bash(git commit -m ' *)"
+      "Bash(git commit -m ' *)",
+      "Bash(sudo npm install -g netlify-cli)",
+      "Bash(gh auth *)",
+      "Bash(npx netlify *)",
+      "mcp__claude_ai_Netlify__netlify-user-services-reader",
+      "mcp__claude_ai_Netlify__netlify-project-services-updater",
+      "mcp__claude_ai_Netlify__netlify-deploy-services-updater",
+      "Bash(npx *)",
+      "Read(//Users/manonkeeman/**)",
+      "Read(//Users/manonkeeman/.config/**)",
+      "Read(//Users/manonkeeman/Library/Preferences/**)"
     ]
   }
 }
