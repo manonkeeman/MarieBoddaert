@@ -1,0 +1,234 @@
+[
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string",
+        "title": "Titel"
+      },
+      {
+        "options": {
+          "source": "title"
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug",
+        "title": "Slug (URL)"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "date",
+        "type": "date",
+        "title": "Datum"
+      },
+      {
+        "rows": 3,
+        "name": "excerpt",
+        "type": "text",
+        "title": "Korte beschrijving"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Verhalen",
+              "value": "Verhalen"
+            },
+            {
+              "title": "Gedichten",
+              "value": "Gedichten"
+            },
+            {
+              "title": "Kattenbellen",
+              "value": "Kattenbellen"
+            }
+          ],
+          "layout": "radio"
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "valid",
+                "constraint": [
+                  "Verhalen",
+                  "Gedichten",
+                  "Kattenbellen"
+                ]
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "category",
+        "type": "string",
+        "title": "Categorie"
+      },
+      {
+        "initialValue": "#FAD5DA",
+        "options": {
+          "list": [
+            {
+              "title": "🌸 Roze",
+              "value": "#FAD5DA"
+            },
+            {
+              "title": "🩵 Turquoise",
+              "value": "#BEE9E9"
+            },
+            {
+              "title": "💜 Lavendel",
+              "value": "#E2D4F0"
+            },
+            {
+              "title": "🍑 Perzik",
+              "value": "#FAE5CE"
+            },
+            {
+              "title": "🌿 Mintgroen",
+              "value": "#C8EAD8"
+            }
+          ]
+        },
+        "name": "color",
+        "type": "string",
+        "title": "Kaartkleur"
+      },
+      {
+        "initialValue": "✍️",
+        "name": "emoji",
+        "type": "string"
+      },
+      {
+        "of": [
+          {
+            "marks": {
+              "annotations": [
+                {
+                  "i18nTitleKey": "inputs.portable-text.annotation.link",
+                  "options": {
+                    "modal": {
+                      "type": "popover"
+                    }
+                  },
+                  "fields": [
+                    {
+                      "validation": [
+                        {
+                          "rules": [
+                            {
+                              "flag": "uri",
+                              "constraint": {
+                                "options": {
+                                  "scheme": [
+                                    "/^http$/",
+                                    "/^https$/",
+                                    "/^tel$/",
+                                    "/^mailto$/"
+                                  ],
+                                  "allowRelative": true,
+                                  "relativeOnly": false,
+                                  "allowCredentials": false
+                                }
+                              }
+                            }
+                          ],
+                          "level": "error"
+                        }
+                      ],
+                      "description": "A valid web, email, phone, or relative link.",
+                      "name": "href",
+                      "type": "url",
+                      "title": "Link"
+                    }
+                  ],
+                  "name": "link",
+                  "type": "object"
+                }
+              ],
+              "decorators": [
+                {
+                  "value": "strong",
+                  "title": "Vet"
+                },
+                {
+                  "value": "em",
+                  "title": "Cursief"
+                }
+              ]
+            },
+            "lists": [
+              {
+                "value": "bullet",
+                "title": "Bulleted list"
+              },
+              {
+                "value": "number",
+                "title": "Numbered list"
+              }
+            ],
+            "styles": [
+              {
+                "value": "normal",
+                "title": "Normaal"
+              },
+              {
+                "value": "h2",
+                "title": "Kop"
+              },
+              {
+                "value": "blockquote",
+                "title": "Citaat"
+              }
+            ],
+            "of": [],
+            "type": "block"
+          }
+        ],
+        "name": "content",
+        "type": "array",
+        "title": "Inhoud"
+      }
+    ],
+    "name": "post",
+    "type": "document"
+  }
+]

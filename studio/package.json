@@ -1,0 +1,16 @@
+{
+  "name": "marie-boddaert-studio",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "sanity dev",
+    "build": "sanity build",
+    "deploy": "sanity deploy --url marie-boddaert"
+  },
+  "dependencies": {
+    "react": "^19.2.2",
+    "react-dom": "^19.2.2",
+    "sanity": "^3.88.2",
+    "styled-components": "^6.4.2"
+  }
+}
