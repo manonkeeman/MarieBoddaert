@@ -35,7 +35,8 @@
       "Read(//Users/manonkeeman/Library/Preferences/**)",
       "Bash(gh repo *)",
       "Bash(npm uninstall *)",
-      "Bash(git push *)"
+      "Bash(git push *)",
+      "Bash(git rm *)"
     ]
   }
 }
