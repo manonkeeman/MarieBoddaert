@@ -1,9 +1,9 @@
 import type { Metadata } from 'next'
-import Image from 'next/image'
 import { PortableText } from '@portabletext/react'
 import { FaInstagram, FaLinkedin, FaBlogger } from 'react-icons/fa'
 import { SiSubstack } from 'react-icons/si'
 import { sanityClient, aboutQuery, sanityImageUrl } from '@/lib/sanity'
+import ProfilePhoto from '@/components/ProfilePhoto'
 
 export const revalidate = 3600
 
@@ -58,12 +58,8 @@ export default async function Over() {
 
       <div className="over-page">
 
-        {/* Foto — Sanity of lokaal */}
-        {photoUrl ? (
-          <img src={photoUrl} alt="Marie H. Boddaert" className="over-photo" />
-        ) : (
-          <Image src="/marie-profiel.png" alt="Marie H. Boddaert" width={200} height={200} className="over-photo" priority />
-        )}
+        {/* Foto — Sanity of lokaal fallback */}
+        <ProfilePhoto sanityUrl={photoUrl} />
 
         <div className="over-content">
 
