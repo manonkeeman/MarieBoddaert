@@ -742,12 +742,13 @@ a { color: inherit; text-decoration: none; }
 .over-page { max-width: 680px; margin: 0 auto; padding: 3rem 2rem 5rem; display: flex; flex-direction: column; align-items: center; gap: 2.5rem; }
 
 .over-photo {
-  width: 130px; height: 130px;
+  width: 220px;
+  height: 300px;
   border-radius: 0;
   border: 3px solid var(--border);
   box-shadow: 6px 6px 0 var(--pink);
   object-fit: cover;
-  object-position: top;
+  object-position: center top;
   flex-shrink: 0;
 }
 
