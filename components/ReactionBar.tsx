@@ -56,6 +56,7 @@ export default function ReactionBar({ postTitle, postSlug }: { postTitle: string
         {REACTIONS.map(r => (
           <button
             key={r.emoji}
+            type="button"
             className={`reaction-btn${reacted[r.key] ? ' reacted' : ''}${bounce === r.key ? ' bounce' : ''}`}
             title={r.label}
             onClick={() => handleClick(r.emoji, r.key)}
