@@ -1,7 +1,7 @@
 ---
 title: French press
 date: 2026-05-07
-excerpt: "Schatje, er is stroomstoring.. kan jij...en.. ..."
+excerpt: Schatje, er is stroomstoring.. kan jij...en.. ...
 category: Kattenbellen
 color: "#FAE5CE"
 emoji: ☕

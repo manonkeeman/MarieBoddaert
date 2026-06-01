@@ -1,7 +1,7 @@
 ---
 title: Baggerbak
 date: 2026-05-20
- excerpt: Mijn liefde en ik hebben de gewoonte te dag met koffie te beginnen in mijn werkkamer.
+excerpt: Mijn liefde en ik hebben de gewoonte te dag met koffie te beginnen in mijn werkkamer.
 category: Verhalen
 color: "#FAD5DA"
 emoji: ☕

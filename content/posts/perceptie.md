@@ -1,7 +1,7 @@
 ---
 title: Perceptie
 date: 2016-01-10
-excerpt: "Do I look like a good muslim?"
+excerpt: Do I look like a good muslim?
 category: Verhalen
 color: "#DDD0F0"
 emoji: 🌍

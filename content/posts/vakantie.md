@@ -1,7 +1,7 @@
 ---
 title: Vakantie
 date: 2015-07-23
-excerpt: "Laten we iets avontuurlijks doen met vakantie!" begin ik heel enthousiast.
+excerpt: Laten we iets avontuurlijks doen met vakantie!
 category: Verhalen
 color: "#FAD5DA"
 emoji: 🏕️
