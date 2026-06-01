@@ -58,8 +58,8 @@ export default async function Over() {
 
       <div className="over-page">
 
-        {/* Foto */}
-        <ProfilePhoto sanityUrl={null} />
+        {/* Foto — Sanity als beschikbaar, anders Marie en Paco */}
+        <ProfilePhoto sanityUrl={photoUrl} />
 
         <div className="over-content">
 
