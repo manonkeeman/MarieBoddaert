@@ -17,3 +17,5 @@ Ik heb gelukkig het idee dat ze mij nog niet zo verschrikkelijk vinden. Sterker 
 
 
 Over hechting gesproken. Onlangs voelde ik overigens iets scherps aan mijn litteken. Ik ben dan zo'n idioot die daar aan gaat krabben en poeren, maar het resultaat gaf me toch enige voldoening. Uiteindelijk trok ik dwars door mijn huid nog drie centimeter hechting uit mijn lijf. Hoef ik me daar ook geen zorgen meer over te maken.
+
+![Brief van Felicia](/brief-felicia.jpg)

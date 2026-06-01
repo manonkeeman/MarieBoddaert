@@ -9,6 +9,8 @@ emoji: 💕
 
 Misschien een half uur na mijn post over mijn aankomende punctie kreeg ik een berichtje van eerder genoemde romance:
 
+![Berichtje van Lucas](/lucas-bericht.png)
+
 Ik steiger een beetje. Is de term romance niet goed? Is die status te min? Het is in ieder geval beter dan:
 je scharrel;
 je neukertje;

@@ -464,6 +464,15 @@ a { color: inherit; text-decoration: none; }
 }
 
 .post-content em { font-style: italic; color: var(--muted); }
+.post-content img {
+  max-width: 100%;
+  height: auto;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 4px 4px 0 var(--border);
+  margin: 1.5rem 0;
+  display: block;
+}
 
 /* ═══════════════════════════════════
    REACTIONS
