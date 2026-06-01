@@ -15,6 +15,11 @@ export default defineConfig({
         S.list()
           .title('Inhoud')
           .items([
+            S.listItem()
+              .title('Over mij')
+              .id('about')
+              .child(S.document().schemaType('about').documentId('about-page')),
+            S.divider(),
             S.listItem().title('Verhalen').child(
               S.documentList().title('Verhalen').filter('_type == "post" && category == "Verhalen"')
             ),
@@ -27,6 +32,10 @@ export default defineConfig({
             S.divider(),
             S.listItem().title('Alle posts').child(
               S.documentList().title('Alle posts').filter('_type == "post"')
+            ),
+            S.divider(),
+            S.listItem().title('Reacties (moderatie)').child(
+              S.documentList().title('Reacties').filter('_type == "comment"').defaultOrdering([{ field: 'createdAt', direction: 'desc' }])
             ),
           ]),
     }),
