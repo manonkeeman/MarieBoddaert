@@ -62,7 +62,7 @@ export default async function Over() {
         {photoUrl ? (
           <img src={photoUrl} alt="Marie H. Boddaert" className="over-photo" />
         ) : (
-          <Image src="/marie.png" alt="Marie H. Boddaert" width={130} height={130} className="over-photo" priority />
+          <Image src="/marie-paco.jpeg" alt="Marie H. Boddaert en Paco" width={130} height={130} className="over-photo" priority />
         )}
 
         <div className="over-content">
