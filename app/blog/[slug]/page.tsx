@@ -100,7 +100,7 @@ export default async function BlogPost({ params }: { params: { slug: string } })
         )}
 
         <hr className="post-divider" />
-        <ReactionBar postTitle={post.title} />
+        <ReactionBar postTitle={post.title} postSlug={post.slug} />
         <CommentForm postTitle={post.title} postSlug={post.slug} />
       </div>
     </>
