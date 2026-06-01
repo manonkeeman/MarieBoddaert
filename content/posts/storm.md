@@ -1,7 +1,7 @@
 ---
 title: Storm
 date: 2021-11-30
-excerpt: De nieuwe ziekte is een stormram. Een ramstorm die huizen en families omver blaast, onvermoeibaar scheurt en schuurt.
+excerpt: de nieuwe ziekte is een stormram
 category: Gedichten
 color: "#DDD0F0"
 emoji: 🌩️
@@ -18,8 +18,10 @@ wanen jegens wetenschap
 desillusies en dansontspringers  
 grijpen zich vast aan hoop en wanhoop en  
 ontkennen een ieder anders strohalm  
-Ja, maar jij— Ja, maar toen— Ja, maar toch!  
+Ja, maar jij- Ja, maar toen- Ja, maar toch!  
 Een storm die nooit meer lijkt te gaan liggen  
+
+
 
 Ik doe het dan maar wel  
 en wens mij in een zwitsers landschap  

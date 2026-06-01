@@ -1,30 +1,45 @@
 ---
 title: French press
 date: 2026-05-07
-excerpt: Stroomstoring. Geen koffie. Mijn liefde dribbelt met zaklamp en tandenborstel door de slaapkamer, en ik beloof iets te regelen — zonder te weten wat.
+excerpt: "Schatje, er is stroomstoring.. kan jij...en.. ..."
 category: Kattenbellen
 color: "#FAE5CE"
 emoji: ☕
 ---
 
-"Schatje, er is stroomstoring... kan jij...en..."
+"Schatje, er is stroomstoring.. kan jij...en.. ..."
+. 
+Ik drijf net weer naar boven na een diepe droom vol met de zin en onzin van mijn hersenen. Iets met tanks en oorlog (het is net 5 mei geweest) en eekhoorns die het voortouw nemen in de strijd en sigaren roken. 
 
-Ik drijf net weer naar boven na een diepe droom vol met de zin en onzin van mijn hersenen. Iets met tanks en oorlog — het is net 5 mei geweest — en eekhoorns die het voortouw nemen in de strijd en sigaren roken.
-
-Aan deze kant van Morpheus' oever is er ook wat reuring. Mijn liefde dribbelt zijn ochtend ritueel, met zijn telefoon met zaklamp-functie in zijn linkerhand en een tandenborstel in zijn andere hand. Hij loopt in en uit de slaapkamer op zoek naar de oorzaak van een nog niet duidelijk probleem.
+Aan deze kant van Morpheus' oever is er ook wat reuring.
+Mijn liefde dribbelt zijn ochtend ritueel, met zijn telefoon met zaklamp functie in zijn linkerhand en een tandenborstel in zijn andere hand loopt hij in en uit de slaapkamer op zoek naar de oorzaak van een nog niet duidelijk probleem.
 
 "Wil je dat doen?", herhaalt mijn liefde, en ik mompel bevestigend.
 
-Als ik iets later echt wakker ben, kijk ik op mijn telefoon. 6.50, en nog 8 procent batterij. Als ik mijn telefoon in de lader stop, klinkt er niet de vertrouwde 'bloeb' die opladen betekent.
+Als ik iets later echt wakker ben, kijk op mijn telefoon. 6.50, en nog 8 procent batterij. Ik zoek mijn oplader, die ik ooit, om te voorkomen dat ik in mijn bed op mijn telefoon zou zitten, verplaatst naar mijn werkplek, met het ongewilde resultaat dat ik dus regelmatig met een bijna lege batterij wakker word. 
 
-O ja. Stroomstoring dus.
+Als ik mijn telefoon in de lader stop, klinkt er niet de vertrouwde 'bloeb' die opladen betekent.
 
-Ik app mijn vriendin in de straat of ze ook zonder stroom zit. Ze bevestigt dit en meldt dat ze nu al de koffie mist.
+O ja, stroomstoring dus. 
 
-"Ik heb een French press," zeg ik.
+Ik app mijn vriendin in de straat of ze ook zonder stroom zit. Ze bevestigt dit en meldt ze nu al de koffie mist. 
 
-"Wat is dat?"
+Ik heb een French press, zeg ik.
 
-Een koffiekan, maar dan zonder stroom. Ik leg het uit. Ze komt langs met haar mok. We zetten water op het gasstel, malen de bonen met de hand, en drinken koffie in de tuin terwijl de rest van de straat nog slaapt.
+Wat is dat? 
 
-Soms zijn de beste ochtenden de ochtenden die niet gaan zoals gepland.
+Een koffie kan, maar dan druk je de koffie door het water in plaats van het water door de koffie. 
+
+Ok, ik kom er nu aan.
+
+Een kwartier later tettert de fluitketel en met een kan koffie ankeren we in de tuin.
+
+Best lekker die french press, zegt mijn vriendin.
+
+Als de stroom weer aangaat, bedenk ik dat mijn liefde me iets gevraagd had vanmorgen. Ik app m niet om te vragen wat, maar bedenk dat nu de stroom weer aan is, het wel mee zal vallen. 
+
+Mijn -korte- werkdag gaat goed. Ik krijg minder snel hoofdpijn van mijn scherm,  en s'avonds kan ik zelfs mijn boek uit lezen. De bastard uit Istanbul, over de nasleep van de Armeense genocide. 
+
+Dan zie ik, als ik in bed lig, en mijn telefoon alweer niet aan de lader heb gehangen, het filmpje van Emmanuel Macron die la Boheme zingt met de Armeense president en ik denk: 
+
+Best lekker, die French Pres.

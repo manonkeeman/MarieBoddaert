@@ -1,7 +1,7 @@
 ---
 title: Hemelvaart
 date: 2026-05-14
-excerpt: Een regenachtige loop door duingebied, dampende thee bij de haard, dineren aan het strand. En mijn pa die lachend naar het water staart en een schip aanwijst dat ten hemel vaart.
+excerpt: Een regenachtige loop door duingebied
 category: Gedichten
 color: "#C8E8D8"
 emoji: ⛵
