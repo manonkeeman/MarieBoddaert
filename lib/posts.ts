@@ -100,15 +100,18 @@ export async function getAllPosts(): Promise<Post[]> {
     getSanityPosts(),
     Promise.resolve(getMarkdownPosts()),
   ])
-  const sanitySlugSet = new Set(sanityPosts.map(p => p.slug))
-  const uniqueMarkdown = markdownPosts.filter(p => !sanitySlugSet.has(p.slug))
-  return [...sanityPosts, ...uniqueMarkdown].sort(
+  // Markdown is leidend — bevat foto's en correcte teksten.
+  // Sanity-only posts (niet in markdown) worden ook getoond.
+  const markdownSlugSet = new Set(markdownPosts.map(p => p.slug))
+  const sanityOnly = sanityPosts.filter(p => !markdownSlugSet.has(p.slug))
+  return [...markdownPosts, ...sanityOnly].sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
   )
 }
 
 export async function getPostBySlug(slug: string): Promise<Post | undefined> {
-  const sanity = await getSanityPostBySlug(slug)
-  if (sanity) return sanity
-  return getMarkdownPostBySlug(slug)
+  // Markdown gaat voor — bevat foto's en correcte teksten.
+  const markdown = getMarkdownPostBySlug(slug)
+  if (markdown) return markdown
+  return getSanityPostBySlug(slug)
 }
