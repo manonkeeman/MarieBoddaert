@@ -102,8 +102,9 @@ export async function getAllPosts(): Promise<Post[]> {
   ])
   // Markdown is leidend — bevat foto's en correcte teksten.
   // Sanity-only posts (niet in markdown) worden ook getoond.
-  const markdownSlugSet = new Set(markdownPosts.map(p => p.slug))
-  const sanityOnly = sanityPosts.filter(p => !markdownSlugSet.has(p.slug))
+  // Vergelijking case-insensitief zodat "Alias" en "alias" niet dubbel staan.
+  const markdownSlugSet = new Set(markdownPosts.map(p => p.slug.toLowerCase()))
+  const sanityOnly = sanityPosts.filter(p => !markdownSlugSet.has(p.slug.toLowerCase()))
   return [...markdownPosts, ...sanityOnly].sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
   )
