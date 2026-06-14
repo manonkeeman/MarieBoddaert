@@ -14,8 +14,8 @@ const publicHeaders = [
       "script-src 'self' 'unsafe-inline'",
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "font-src 'self' https://fonts.gstatic.com",
-      "img-src 'self' data: blob: https://cdn.sanity.io",
-      "connect-src 'self' https://*.sanity.io https://api.sanity.io",
+      "img-src 'self' data: blob: https://*.supabase.co",
+      "connect-src 'self' https://*.supabase.co wss://*.supabase.co",
       "frame-ancestors 'none'",
       "form-action 'self' mailto:",
       "base-uri 'self'",
@@ -23,19 +23,18 @@ const publicHeaders = [
   },
 ]
 
-const studioHeaders = [
+const adminHeaders = [
   { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
   {
     key: 'Content-Security-Policy',
     value: [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.sanity.io",
-      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://*.sanity.io",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "font-src 'self' https://fonts.gstatic.com data:",
-      "img-src 'self' data: blob: https://cdn.sanity.io https://*.sanity.io",
-      "connect-src 'self' https://*.sanity.io https://api.sanity.io wss://*.sanity.io",
-      "worker-src blob:",
-      "frame-src 'self' https://*.sanity.io",
+      "img-src 'self' data: blob: https://*.supabase.co",
+      "connect-src 'self' https://*.supabase.co wss://*.supabase.co",
+      "frame-src 'self'",
     ].join('; '),
   },
 ]
@@ -43,13 +42,19 @@ const studioHeaders = [
 const nextConfig = {
   async headers() {
     return [
-      { source: '/studio/:path*',       headers: studioHeaders },
-      { source: '/((?!studio).*)',       headers: publicHeaders },
+      { source: '/admin/:path*',       headers: adminHeaders },
+      { source: '/((?!admin).*)',      headers: publicHeaders },
     ]
   },
   images: {
     formats: ['image/avif', 'image/webp'],
-    remotePatterns: [{ protocol: 'https', hostname: 'cdn.sanity.io' }],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '*.supabase.co',
+        pathname: '/storage/v1/object/public/**',
+      },
+    ],
   },
   compress: true,
   poweredByHeader: false,

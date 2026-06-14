@@ -1,36 +1,26 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createClient } from '@sanity/client'
-
-const readClient = createClient({
-  projectId: 'xfgj8bxt',
-  dataset:   'production',
-  apiVersion: '2025-01-01',
-  useCdn:    true,
-})
+import { createSupabaseAdminClient } from '@/lib/supabase-server'
 
 export async function GET(req: NextRequest) {
   const slug = req.nextUrl.searchParams.get('slug')
   if (!slug) return NextResponse.json({ comments: [] })
 
   try {
-    const comments = await readClient.fetch(
-      `*[_type == "comment" && postSlug == $slug && approved == true] | order(createdAt asc) {
-        _id, name, message, createdAt
-      }`,
-      { slug }
-    )
-    return NextResponse.json({ comments })
+    const supabase = createSupabaseAdminClient()
+    const { data } = await supabase
+      .from('comments')
+      .select('id, name, message, created_at')
+      .eq('post_slug', slug)
+      .eq('approved', true)
+      .order('created_at', { ascending: true })
+
+    return NextResponse.json({ comments: data ?? [] })
   } catch {
     return NextResponse.json({ comments: [] })
   }
 }
 
 export async function POST(req: NextRequest) {
-  const token = process.env.SANITY_TOKEN
-  if (!token) {
-    return NextResponse.json({ error: 'Server configuratie fout' }, { status: 500 })
-  }
-
   try {
     const { name, message, postSlug } = await req.json()
 
@@ -41,23 +31,15 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Tekst te lang' }, { status: 400 })
     }
 
-    const writeClient = createClient({
-      projectId: 'xfgj8bxt',
-      dataset:   'production',
-      apiVersion: '2025-01-01',
-      token,
-      useCdn:    false,
-    })
-
-    await writeClient.create({
-      _type:     'comment',
-      postSlug:  postSlug.trim(),
+    const supabase = createSupabaseAdminClient()
+    const { error } = await supabase.from('comments').insert({
+      post_slug: postSlug.trim(),
       name:      name.trim(),
       message:   message.trim(),
       approved:  false,
-      createdAt: new Date().toISOString(),
     })
 
+    if (error) throw error
     return NextResponse.json({ ok: true })
   } catch {
     return NextResponse.json({ error: 'Er ging iets mis' }, { status: 500 })

@@ -1,118 +1,60 @@
-import fs from 'fs'
-import path from 'path'
-import matter from 'gray-matter'
-import { marked } from 'marked'
-import { sanityClient, allPostsQuery, postBySlugQuery } from './sanity'
+import { createSupabaseServerClient } from './supabase-server'
 
 export { getReadingTime } from './utils'
 
-const postsDir = path.join(process.cwd(), 'content', 'posts')
-
 export interface Post {
-  slug: string
-  title: string
-  date: string
-  excerpt: string
-  content: string          // HTML for markdown posts, empty for Sanity posts
-  portableContent?: any[]  // Portable Text blocks for Sanity posts
+  slug:     string
+  title:    string
+  date:     string
+  excerpt:  string
+  content:  string    // HTML
   category: string
-  color: string
-  emoji: string
-  source?: 'markdown' | 'sanity'
+  color:    string
+  emoji:    string
 }
 
-// ─── Markdown ──────────────────────────────────────────────────────
-
-function getMarkdownPosts(): Post[] {
-  if (!fs.existsSync(postsDir)) return []
-  return fs
-    .readdirSync(postsDir)
-    .filter(f => f.endsWith('.md'))
-    .map(f => getMarkdownPostBySlug(f.replace(/\.md$/, '')))
-    .filter((p): p is Post => p !== undefined)
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-}
-
-function getMarkdownPostBySlug(slug: string): Post | undefined {
-  const filePath = path.join(postsDir, `${slug}.md`)
-  if (!fs.existsSync(filePath)) return undefined
-  const { data, content } = matter(fs.readFileSync(filePath, 'utf8'))
-  return {
-    slug,
-    title:    data.title ?? '',
-    date:     String(data.date ?? ''),
-    excerpt:  data.excerpt ?? '',
-    content:  String(marked.parse(content)),
-    category: data.category ?? '',
-    color:    data.color ?? '#FAD5DA',
-    emoji:    data.emoji ?? '',
-    source:   'markdown',
-  }
-}
-
-// ─── Sanity ────────────────────────────────────────────────────────
-
-async function getSanityPosts(): Promise<Post[]> {
+export async function getAllPosts(): Promise<Post[]> {
   try {
-    const raw = await sanityClient.fetch(allPostsQuery)
-    return (raw ?? []).map((p: any) => ({
-      slug:            p.slug,
-      title:           p.title ?? '',
-      date:            p.date ?? '',
-      excerpt:         p.excerpt ?? '',
-      content:         '',
-      portableContent: p.content ?? [],
-      category:        p.category ?? '',
-      color:           p.color ?? '#FAD5DA',
-      emoji:           p.emoji ?? '✍️',
-      source:          'sanity' as const,
-    }))
+    const supabase = createSupabaseServerClient()
+    const { data, error } = await supabase
+      .from('posts')
+      .select('slug, title, date, excerpt, content, category, color, emoji')
+      .eq('published', true)
+      .order('date', { ascending: false })
+
+    if (error || !data) return []
+    return data.map(normalizePost)
   } catch {
     return []
   }
 }
 
-async function getSanityPostBySlug(slug: string): Promise<Post | undefined> {
+export async function getPostBySlug(slug: string): Promise<Post | undefined> {
   try {
-    const p = await sanityClient.fetch(postBySlugQuery, { slug })
-    if (!p) return undefined
-    return {
-      slug:            p.slug,
-      title:           p.title ?? '',
-      date:            p.date ?? '',
-      excerpt:         p.excerpt ?? '',
-      content:         '',
-      portableContent: p.content ?? [],
-      category:        p.category ?? '',
-      color:           p.color ?? '#FAD5DA',
-      emoji:           p.emoji ?? '✍️',
-      source:          'sanity' as const,
-    }
+    const supabase = createSupabaseServerClient()
+    const { data, error } = await supabase
+      .from('posts')
+      .select('slug, title, date, excerpt, content, category, color, emoji')
+      .eq('slug', slug)
+      .eq('published', true)
+      .single()
+
+    if (error || !data) return undefined
+    return normalizePost(data)
   } catch {
     return undefined
   }
 }
 
-// ─── Public API ────────────────────────────────────────────────────
-
-export async function getAllPosts(): Promise<Post[]> {
-  const [sanityPosts, markdownPosts] = await Promise.all([
-    getSanityPosts(),
-    Promise.resolve(getMarkdownPosts()),
-  ])
-  // Markdown is leidend — bevat foto's en correcte teksten.
-  // Sanity-only posts (niet in markdown) worden ook getoond.
-  // Vergelijking case-insensitief zodat "Alias" en "alias" niet dubbel staan.
-  const markdownSlugSet = new Set(markdownPosts.map(p => p.slug.toLowerCase()))
-  const sanityOnly = sanityPosts.filter(p => !markdownSlugSet.has(p.slug.toLowerCase()))
-  return [...markdownPosts, ...sanityOnly].sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-  )
-}
-
-export async function getPostBySlug(slug: string): Promise<Post | undefined> {
-  // Markdown gaat voor — bevat foto's en correcte teksten.
-  const markdown = getMarkdownPostBySlug(slug)
-  if (markdown) return markdown
-  return getSanityPostBySlug(slug)
+function normalizePost(p: any): Post {
+  return {
+    slug:     p.slug     ?? '',
+    title:    p.title    ?? '',
+    date:     p.date     ?? '',
+    excerpt:  p.excerpt  ?? '',
+    content:  p.content  ?? '',
+    category: p.category ?? '',
+    color:    p.color    ?? '#FAD5DA',
+    emoji:    p.emoji    ?? '✍️',
+  }
 }

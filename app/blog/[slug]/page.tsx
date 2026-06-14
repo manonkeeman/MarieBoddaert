@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { PortableText } from '@portabletext/react'
 import { getAllPosts, getPostBySlug } from '@/lib/posts'
 import { getReadingTime } from '@/lib/utils'
 import ReactionBar from '@/components/ReactionBar'
@@ -13,18 +12,6 @@ const BASE = process.env.NEXT_PUBLIC_SITE_URL || 'https://marie-boddaert.netlify
 
 function formatDate(d: string) {
   return new Date(d).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' })
-}
-
-const ptComponents = {
-  block: {
-    h2:         ({ children }: any) => <h2>{children}</h2>,
-    blockquote: ({ children }: any) => <blockquote className="over-poetic">{children}</blockquote>,
-    normal:     ({ children }: any) => <p>{children}</p>,
-  },
-  marks: {
-    em:     ({ children }: any) => <em>{children}</em>,
-    strong: ({ children }: any) => <strong>{children}</strong>,
-  },
 }
 
 export async function generateStaticParams() {
@@ -55,21 +42,21 @@ export default async function BlogPost({ params }: { params: { slug: string } })
   const post = await getPostBySlug(params.slug)
   if (!post) notFound()
 
-  const minutes = getReadingTime(post.content, post.portableContent)
+  const minutes = getReadingTime(post.content)
 
   const articleSchema = {
-    '@context':      'https://schema.org',
-    '@type':         'BlogPosting',
-    headline:         post.title,
-    description:      post.excerpt,
-    datePublished:    post.date,
-    dateModified:     post.date,
-    author:          { '@type': 'Person', name: 'Marie H. Boddaert', url: `${BASE}/over` },
-    publisher:       { '@type': 'Person', name: 'Marie H. Boddaert' },
-    url:             `${BASE}/blog/${post.slug}`,
-    inLanguage:      'nl-NL',
-    articleSection:   post.category,
-    timeRequired:    `PT${minutes}M`,
+    '@context':    'https://schema.org',
+    '@type':       'BlogPosting',
+    headline:       post.title,
+    description:    post.excerpt,
+    datePublished:  post.date,
+    dateModified:   post.date,
+    author:        { '@type': 'Person', name: 'Marie H. Boddaert', url: `${BASE}/over` },
+    publisher:     { '@type': 'Person', name: 'Marie H. Boddaert' },
+    url:           `${BASE}/blog/${post.slug}`,
+    inLanguage:    'nl-NL',
+    articleSection: post.category,
+    timeRequired:  `PT${minutes}M`,
   }
 
   return (
@@ -90,15 +77,7 @@ export default async function BlogPost({ params }: { params: { slug: string } })
 
       <div className="blog-post">
         <Link href="/" className="back-link">← Terug</Link>
-
-        {post.source === 'sanity' && post.portableContent?.length ? (
-          <div className="post-content">
-            <PortableText value={post.portableContent} components={ptComponents} />
-          </div>
-        ) : (
-          <div className="post-content" dangerouslySetInnerHTML={{ __html: post.content }} />
-        )}
-
+        <div className="post-content" dangerouslySetInnerHTML={{ __html: post.content }} />
         <hr className="post-divider" />
         <ReactionBar postTitle={post.title} postSlug={post.slug} />
         <CommentForm postTitle={post.title} postSlug={post.slug} />

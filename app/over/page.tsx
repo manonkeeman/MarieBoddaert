@@ -1,8 +1,7 @@
 import type { Metadata } from 'next'
-import { PortableText } from '@portabletext/react'
 import { FaInstagram, FaLinkedin, FaBlogger } from 'react-icons/fa'
 import { SiSubstack } from 'react-icons/si'
-import { sanityClient, aboutQuery, sanityImageUrl } from '@/lib/sanity'
+import { createSupabaseServerClient } from '@/lib/supabase-server'
 import ProfilePhoto from '@/components/ProfilePhoto'
 
 export const revalidate = 3600
@@ -12,32 +11,36 @@ export const metadata: Metadata = {
   description: 'Marie H. Boddaert schrijft blogs, gedichten, kattenbellen en gevatte teksten. Psychologe uit Leiden, moeder van drie, eigenaar van Paco.',
 }
 
-const DEFAULT_SERVICES = ['Blogs', 'Gedichten', 'Kattenbellen', 'Gevatte teksten', 'Bevredigende content']
-const DEFAULT_SLOGAN   = 'Gelukkig kan ze nog wel schrijven.'
-const DEFAULT_SOCIALS  = {
+const DEFAULTS = {
+  tagline:   'Marie H. Boddaert schrijft.',
+  services:  ['Blogs', 'Gedichten', 'Kattenbellen', 'Gevatte teksten', 'Bevredigende content'],
+  slogan:    'Gelukkig kan ze nog wel schrijven.',
   instagram: 'https://www.instagram.com/bodhimari/',
   linkedin:  'https://www.linkedin.com/in/marieboddaert/',
   blogger:   'https://dewereldvanmarie.blogspot.com',
   substack:  '#',
 }
 
-const ptComponents = {
-  block: { normal: ({ children }: any) => <p>{children}</p> },
-  marks: { em: ({ children }: any) => <em>{children}</em>, strong: ({ children }: any) => <strong>{children}</strong> },
-}
-
 export default async function Over() {
   let cms: any = null
-  try { cms = await sanityClient.fetch(aboutQuery) } catch {}
+  try {
+    const supabase = createSupabaseServerClient()
+    const { data } = await supabase
+      .from('about')
+      .select('*')
+      .eq('id', 'about-page')
+      .single()
+    cms = data
+  } catch {}
 
-  const photoUrl  = cms?.photo ? sanityImageUrl(cms.photo) : null
-  const services  = cms?.services?.length ? cms.services : DEFAULT_SERVICES
-  const slogan    = cms?.slogan ?? DEFAULT_SLOGAN
+  const photoUrl  = cms?.photo_url ?? null
+  const services  = cms?.services?.length ? cms.services : DEFAULTS.services
+  const slogan    = cms?.slogan    ?? DEFAULTS.slogan
   const socials   = {
-    instagram: cms?.instagram ?? DEFAULT_SOCIALS.instagram,
-    linkedin:  cms?.linkedin  ?? DEFAULT_SOCIALS.linkedin,
-    blogger:   cms?.blogger   ?? DEFAULT_SOCIALS.blogger,
-    substack:  cms?.substack  ?? DEFAULT_SOCIALS.substack,
+    instagram: cms?.instagram ?? DEFAULTS.instagram,
+    linkedin:  cms?.linkedin  ?? DEFAULTS.linkedin,
+    blogger:   cms?.blogger   ?? DEFAULTS.blogger,
+    substack:  cms?.substack  ?? DEFAULTS.substack,
   }
 
   const socialLinks = [
@@ -47,33 +50,28 @@ export default async function Over() {
     { label: 'LinkedIn',  href: socials.linkedin,  icon: FaLinkedin  },
   ]
 
+  const hasBio = Boolean(cms?.bio?.trim())
+
   return (
     <>
       <div className="post-banner" style={{ backgroundColor: '#FAD5DA' }}>
         <div className="post-banner-inner">
           <p className="post-category">Over mij</p>
-          <h1 className="post-title">{cms?.tagline ?? 'Marie H. Boddaert schrijft.'}</h1>
+          <h1 className="post-title">{cms?.tagline ?? DEFAULTS.tagline}</h1>
         </div>
       </div>
 
       <div className="over-page">
-
-        {/* Foto — Sanity als beschikbaar, anders Marie en Paco */}
-        <ProfilePhoto sanityUrl={photoUrl} />
+        <ProfilePhoto photoUrl={photoUrl} />
 
         <div className="over-content">
-
-          {/* Schrijfstijlen */}
           <ul className="over-services">
             {services.map((s: string) => <li key={s}>{s}</li>)}
           </ul>
           <p className="over-aanvraag">Op verzoek en aanvraag.</p>
 
-          {/* Biografie — Sanity of hardcoded */}
-          {cms?.bio?.length ? (
-            <div className="over-block">
-              <PortableText value={cms.bio} components={ptComponents} />
-            </div>
+          {hasBio ? (
+            <div className="over-block" dangerouslySetInnerHTML={{ __html: cms.bio }} />
           ) : (
             <>
               <div className="over-block">
@@ -111,7 +109,6 @@ export default async function Over() {
 
           <p className="over-slogan">{slogan}</p>
 
-          {/* Services onderaan */}
           <div className="over-services-section">
             <p className="over-services-label">Wat schrijft Marie?</p>
             <div className="over-service-tags">
@@ -130,7 +127,6 @@ export default async function Over() {
             </a>
           </div>
 
-          {/* Socials */}
           <div className="over-socials">
             <p className="over-socials-label">Volg Marie</p>
             <div className="over-socials-links">
@@ -141,7 +137,6 @@ export default async function Over() {
               ))}
             </div>
           </div>
-
         </div>
       </div>
     </>

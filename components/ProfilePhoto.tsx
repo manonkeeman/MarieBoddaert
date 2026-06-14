@@ -2,8 +2,8 @@
 
 import { useState } from 'react'
 
-export default function ProfilePhoto({ sanityUrl }: { sanityUrl: string | null }) {
-  const [src, setSrc] = useState(sanityUrl || '/marie-paco.jpeg')
+export default function ProfilePhoto({ photoUrl }: { photoUrl: string | null }) {
+  const [src, setSrc] = useState(photoUrl || '/marie-paco.jpeg')
 
   return (
     // eslint-disable-next-line @next/next/no-img-element

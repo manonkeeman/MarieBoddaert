@@ -1,35 +1,23 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createClient } from '@sanity/client'
+import { createSupabaseAdminClient } from '@/lib/supabase-server'
 
-const EMOJI_KEYS: Record<string, string> = {
-  '❤️': 'heart',
-  '👏': 'applause',
-  '😂': 'laugh',
-  '🌸': 'flower',
-  '✨': 'sparkle',
-  '🥺': 'sad',
-}
-
-const readClient = createClient({
-  projectId:  'xfgj8bxt',
-  dataset:    'production',
-  apiVersion: '2025-01-01',
-  useCdn:     true,
-})
+const VALID_EMOJIS = ['❤️', '👏', '😂', '🌸', '✨', '🥺']
 
 export async function GET(req: NextRequest) {
   const slug = req.nextUrl.searchParams.get('slug')
   if (!slug) return NextResponse.json({})
 
   try {
-    const doc = await readClient.fetch(
-      `*[_id == $id][0]`,
-      { id: `reactions-${slug}` }
-    )
+    const supabase = createSupabaseAdminClient()
+    const { data } = await supabase
+      .from('reactions')
+      .select('emoji, count')
+      .eq('post_slug', slug)
+
     const counts: Record<string, number> = {}
-    for (const key of Object.values(EMOJI_KEYS)) {
-      counts[key] = doc?.[key] ?? 0
-    }
+    for (const emoji of VALID_EMOJIS) counts[emoji] = 0
+    for (const row of data ?? []) counts[row.emoji] = row.count
+
     return NextResponse.json(counts)
   } catch {
     return NextResponse.json({})
@@ -37,33 +25,37 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  const token = process.env.SANITY_TOKEN
-  if (!token) return NextResponse.json({ error: 'niet geconfigureerd' }, { status: 500 })
-
   try {
     const { emoji, postSlug } = await req.json()
-    const key = EMOJI_KEYS[emoji]
-    if (!key || !postSlug?.trim()) {
-      return NextResponse.json({ error: 'ongeldige invoer' }, { status: 400 })
+
+    if (!VALID_EMOJIS.includes(emoji) || !postSlug?.trim()) {
+      return NextResponse.json({ error: 'Ongeldige invoer' }, { status: 400 })
     }
 
-    const writeClient = createClient({
-      projectId:  'xfgj8bxt',
-      dataset:    'production',
-      apiVersion: '2025-01-01',
-      token,
-      useCdn:     false,
-    })
+    const supabase = createSupabaseAdminClient()
+    const slug = postSlug.trim()
 
-    const docId = `reactions-${postSlug.trim()}`
-    await writeClient
-      .transaction()
-      .createIfNotExists({ _id: docId, _type: 'reactionCount', postSlug: postSlug.trim() })
-      .patch(docId, p => p.setIfMissing({ [key]: 0 }).inc({ [key]: 1 }))
-      .commit()
+    // Upsert: maak aan als niet bestaat, verhoog teller
+    const { data: existing } = await supabase
+      .from('reactions')
+      .select('id, count')
+      .eq('post_slug', slug)
+      .eq('emoji', emoji)
+      .single()
+
+    if (existing) {
+      await supabase
+        .from('reactions')
+        .update({ count: existing.count + 1 })
+        .eq('id', existing.id)
+    } else {
+      await supabase
+        .from('reactions')
+        .insert({ post_slug: slug, emoji, count: 1 })
+    }
 
     return NextResponse.json({ ok: true })
   } catch {
-    return NextResponse.json({ error: 'er ging iets mis' }, { status: 500 })
+    return NextResponse.json({ error: 'Er ging iets mis' }, { status: 500 })
   }
 }
