@@ -118,7 +118,7 @@ export default async function Over() {
             </div>
             <p className="over-aanvraag">Op verzoek en aanvraag.</p>
             <a href={socials.substack} target="_blank" rel="noopener noreferrer" className="btn btn-dark over-newsletter-btn">
-              Abonneer op de nieuwsbrief →
+              Lees op Substack →
             </a>
           </div>
 

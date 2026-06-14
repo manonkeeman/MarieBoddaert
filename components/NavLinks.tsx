@@ -10,7 +10,7 @@ const links = [
   { href: '/kattenbellen', label: 'Kattenbellen' },
   { href: '/over',         label: 'Over' },
   { href: '/contact',      label: 'Contact' },
-  { href: 'https://substack.com/@marieboddaert', label: 'Nieuwsbrief', highlight: true, external: true },
+  { href: 'https://substack.com/@marieboddaert', label: 'Substack', highlight: true, external: true },
 ]
 
 export default function NavLinks() {

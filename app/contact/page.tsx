@@ -50,7 +50,7 @@ export default function Contact() {
         <div className="contact-newsletter">
           <p>Liever niets missen?</p>
           <a href="https://substack.com/@marieboddaert" target="_blank" rel="noopener noreferrer" className="btn btn-dark">
-            Abonneer op de nieuwsbrief →
+            Lees op Substack →
           </a>
         </div>
       </div>
