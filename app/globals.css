@@ -37,43 +37,11 @@ a { color: inherit; text-decoration: none; }
   background: linear-gradient(135deg, #FBCFDB 0%, #E8D0F5 50%, #C5E5EF 100%);
   border-bottom: 3px solid var(--border);
   display: flex;
-  align-items: stretch;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1rem 2rem;
   position: relative;
   overflow: hidden;
-  min-height: 180px;
-}
-
-.header-photo-wrap {
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  padding: 0 1rem 0 1.75rem;
-  position: relative;
-  z-index: 2;
-}
-
-.header-photo {
-  width: 112px;
-  height: 112px;
-  border-radius: 50%;
-  object-fit: cover;
-  object-position: left top;
-  border: 3px solid var(--border);
-  box-shadow: 0 0 0 5px rgba(255,255,255,0.5), 0 6px 22px rgba(42,26,42,0.18);
-  display: block;
-  flex-shrink: 0;
-}
-
-.header-center {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 1.75rem 1.5rem;
-  text-align: center;
-  position: relative;
-  z-index: 2;
 }
 
 .header::before {
@@ -82,7 +50,7 @@ a { color: inherit; text-decoration: none; }
   width: 260px; height: 260px;
   background: rgba(255,255,255,0.18);
   border-radius: 50%;
-  top: -180px; left: -100px;
+  top: -160px; left: -80px;
   pointer-events: none;
   z-index: 0;
 }
@@ -93,52 +61,79 @@ a { color: inherit; text-decoration: none; }
   width: 160px; height: 160px;
   background: rgba(255,255,255,0.15);
   border-radius: 50%;
-  bottom: -90px; right: -60px;
+  bottom: -80px; right: -50px;
   pointer-events: none;
   z-index: 0;
+}
+
+/* Foto + merknaam links */
+.header-brand-group {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 2;
+}
+
+.header-photo {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: left top;
+  border: 3px solid var(--border);
+  box-shadow: 0 0 0 4px rgba(255,255,255,0.55), 0 4px 16px rgba(42,26,42,0.16);
+  display: block;
+  flex-shrink: 0;
+}
+
+.header-brand-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
 }
 
 .header-brand {
   display: block;
   font-family: var(--font-pacifico), 'Pacifico', cursive;
-  font-size: clamp(2rem, 5vw, 3rem);
+  font-size: clamp(1.55rem, 2.4vw, 2.1rem);
   color: var(--text);
-  line-height: 1.2;
-  margin-bottom: 0.75rem;
+  line-height: 1;
 }
 
 .header-tagline {
-  font-size: 0.95rem;
+  font-size: 0.68rem;
   font-weight: 700;
   color: var(--text);
-  letter-spacing: 0.12em;
+  letter-spacing: 0.13em;
   text-transform: uppercase;
-  margin: 0 0 1.35rem;
-  padding-top: 0.5rem;
-  border-top: 2px solid rgba(42, 26, 42, 0.15);
-  width: fit-content;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  margin: 0;
+  opacity: 0.72;
 }
 
+/* Nav vult de ruimte en centreert zichzelf */
 .header-nav {
+  flex: 1;
   display: flex;
   justify-content: center;
-  gap: 0.3rem;
+  gap: 0.25rem;
   flex-wrap: wrap;
-  margin-bottom: 0.9rem;
+  position: relative;
+  z-index: 2;
 }
 
 .header-nav a {
-  font-size: 0.75rem;
+  font-size: 0.73rem;
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--text);
-  padding: 0.3rem 0.85rem;
+  padding: 0.3rem 0.8rem;
   border: 2px solid transparent;
   border-radius: var(--radius);
   transition: background 0.15s, border-color 0.15s;
+  white-space: nowrap;
 }
 
 .header-nav a:hover,
@@ -147,14 +142,27 @@ a { color: inherit; text-decoration: none; }
   border-color: var(--border);
 }
 
-@media (max-width: 520px) {
-  .header-photo-wrap { display: none; }
+/* Mobile: verticaal gestapeld */
+@media (max-width: 720px) {
+  .header {
+    flex-direction: column;
+    padding: 1.25rem 1rem 1rem;
+    gap: 0.75rem;
+    text-align: center;
+  }
+  .header-brand-group {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .header-brand-text { align-items: center; }
+  .header-photo { width: 76px; height: 76px; }
+  .header-nav { justify-content: center; }
 }
 
 /* Search */
 .search-form {
   display: flex;
-  justify-content: center;
+  flex-shrink: 0;
   position: relative;
   z-index: 2;
 }
