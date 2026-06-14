@@ -1,6 +1,10 @@
 import type { Metadata } from 'next'
+import ContactForm from './ContactForm'
 
-export const metadata: Metadata = { title: 'Contact — Marie H. Boddaert' }
+export const metadata: Metadata = {
+  title: 'Contact',
+  description: 'Stuur Marie H. Boddaert een bericht — over iets wat je las, een samenwerking of gewoon hallo.',
+}
 
 export default function Contact() {
   return (
@@ -19,33 +23,13 @@ export default function Contact() {
         </p>
 
         <div className="contact-form-box">
-          <form
-            action="mailto:mh.boddaert@gmail.com"
-            method="post"
-            encType="text/plain"
-            className="comment-form"
-          >
-            <div className="form-group">
-              <label htmlFor="naam" className="form-label">Naam</label>
-              <input type="text" id="naam" name="naam" className="form-input" placeholder="Jouw naam" required />
-            </div>
-            <div className="form-group">
-              <label htmlFor="email" className="form-label">E-mailadres</label>
-              <input type="email" id="email" name="email" className="form-input" placeholder="jij@voorbeeld.nl" required />
-            </div>
-            <div className="form-group">
-              <label htmlFor="onderwerp" className="form-label">Onderwerp</label>
-              <input type="text" id="onderwerp" name="onderwerp" className="form-input" placeholder="Waar gaat je bericht over?" />
-            </div>
-            <div className="form-group">
-              <label htmlFor="bericht" className="form-label">Bericht</label>
-              <textarea id="bericht" name="bericht" className="form-textarea" placeholder="Schrijf hier je bericht..." rows={5} required />
-            </div>
-            <button type="submit" className="btn btn-turquoise">Verstuur bericht →</button>
-          </form>
+          <ContactForm />
         </div>
 
-        <p className="contact-email">Of mail direct naar mh.boddaert@gmail.com</p>
+        <p className="contact-email">
+          Of mail direct naar{' '}
+          <a href="mailto:mh.boddaert@gmail.com">mh.boddaert@gmail.com</a>
+        </p>
 
         <div className="contact-newsletter">
           <p>Liever niets missen?</p>

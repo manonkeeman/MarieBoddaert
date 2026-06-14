@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { FaInstagram, FaLinkedin, FaBlogger } from 'react-icons/fa'
 import { SiSubstack } from 'react-icons/si'
-import { createSupabaseServerClient } from '@/lib/supabase-server'
+import { createSupabaseAdminClient } from '@/lib/supabase-server'
 import ProfilePhoto from '@/components/ProfilePhoto'
 
 export const revalidate = 3600
@@ -24,7 +24,7 @@ const DEFAULTS = {
 export default async function Over() {
   let cms: any = null
   try {
-    const supabase = createSupabaseServerClient()
+    const supabase = createSupabaseAdminClient()
     const { data } = await supabase
       .from('about')
       .select('*')

@@ -4,7 +4,7 @@ import { getAllPosts, getPostBySlug } from '@/lib/posts'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
-const BASE = process.env.NEXT_PUBLIC_SITE_URL || 'https://marie-boddaert.netlify.app'
+const BASE = process.env.NEXT_PUBLIC_SITE_URL || 'https://marieboddaert.nl'
 
 export async function generateStaticParams() {
   const posts = await getAllPosts()
@@ -98,7 +98,7 @@ export default async function Image({ params }: { params: { slug: string } }) {
           </div>
         </div>
         <div style={{ marginLeft: 'auto', fontSize: 16, color: '#2A1A2A', opacity: 0.45, fontWeight: 600, display: 'flex' }}>
-          marie-boddaert.netlify.app
+          marieboddaert.nl
         </div>
       </div>
     </div>

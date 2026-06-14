@@ -5,7 +5,7 @@ export const alt = 'Marie H. Boddaert — Blog'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
-const BASE = process.env.NEXT_PUBLIC_SITE_URL || 'https://marie-boddaert.netlify.app'
+const BASE = process.env.NEXT_PUBLIC_SITE_URL || 'https://marieboddaert.nl'
 
 async function fetchPhoto(url: string): Promise<string | null> {
   try {
@@ -36,7 +36,7 @@ export default async function Image() {
 
   // Fallback: huidige profielfoto op de site
   if (!photoSrc) {
-    photoSrc = await fetchPhoto(`${BASE}/marie-paco.jpeg`)
+    photoSrc = await fetchPhoto(`${BASE}/marie-over-mij.jpeg`)
   }
 
   return new ImageResponse(
