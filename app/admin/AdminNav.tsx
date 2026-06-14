@@ -43,7 +43,7 @@ export default function AdminNav() {
       </nav>
 
       <a
-        href="/handleiding-marie.html"
+        href="/handleiding.html"
         target="_blank"
         rel="noopener noreferrer"
         className="admin-nav-link"
