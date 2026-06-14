@@ -3,6 +3,7 @@ import { createSupabaseAdminClient } from '@/lib/supabase-server'
 import fs from 'fs'
 import path from 'path'
 
+export const runtime = 'nodejs'
 export const alt = 'Marie H. Boddaert — Blog'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
