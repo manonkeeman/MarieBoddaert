@@ -65,11 +65,6 @@ export default async function Over() {
         <ProfilePhoto photoUrl={photoUrl} />
 
         <div className="over-content">
-          <ul className="over-services">
-            {services.map((s: string) => <li key={s}>{s}</li>)}
-          </ul>
-          <p className="over-aanvraag">Op verzoek en aanvraag.</p>
-
           {hasBio ? (
             <div className="over-block" dangerouslySetInnerHTML={{ __html: cms.bio }} />
           ) : (
