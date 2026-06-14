@@ -1,14 +1,13 @@
 import { ImageResponse } from 'next/og'
 import { createSupabaseAdminClient } from '@/lib/supabase-server'
-import fs from 'fs'
-import path from 'path'
 
-export const runtime = 'nodejs'
 export const alt = 'Marie H. Boddaert — Blog'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
-async function fetchRemotePhoto(url: string): Promise<string | null> {
+const SITE = process.env.NEXT_PUBLIC_SITE_URL || 'https://marie-boddaert.netlify.app'
+
+async function fetchPhoto(url: string): Promise<string | null> {
   try {
     const res = await fetch(url, { cache: 'no-store' })
     if (!res.ok) return null
@@ -20,19 +19,8 @@ async function fetchRemotePhoto(url: string): Promise<string | null> {
   }
 }
 
-function readLocalPhoto(filename: string): string | null {
-  try {
-    const filePath = path.join(process.cwd(), 'public', filename)
-    const buf = fs.readFileSync(filePath)
-    const ext = path.extname(filename).slice(1).replace('jpg', 'jpeg')
-    return `data:image/${ext};base64,${buf.toString('base64')}`
-  } catch {
-    return null
-  }
-}
-
 export default async function Image() {
-  // 1. Probeer foto die Marie heeft geüpload in Supabase
+  // 1. Foto die Marie heeft geüpload via het admin panel
   let photoSrc: string | null = null
   try {
     const supabase = createSupabaseAdminClient()
@@ -42,13 +30,13 @@ export default async function Image() {
       .eq('id', 'about-page')
       .single()
     if (data?.photo_url) {
-      photoSrc = await fetchRemotePhoto(data.photo_url)
+      photoSrc = await fetchPhoto(data.photo_url)
     }
   } catch {}
 
-  // 2. Vaste fallback: marie-over-mij.jpeg rechtstreeks van bestandssysteem
+  // 2. Fallback: marie-over-mij.jpeg van de live site (statisch bestand)
   if (!photoSrc) {
-    photoSrc = readLocalPhoto('marie-over-mij.jpeg')
+    photoSrc = await fetchPhoto(`${SITE}/marie-over-mij.jpeg`)
   }
 
   return new ImageResponse(
@@ -120,9 +108,7 @@ export default async function Image() {
           alignItems: 'center', justifyContent: 'center',
           fontFamily: 'Georgia, serif', fontSize: 80, fontWeight: 800,
           color: '#2A1A2A',
-        }}>
-          M
-        </div>
+        }}>M</div>
       )}
     </div>
   )
