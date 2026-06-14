@@ -6,7 +6,7 @@ const slides = [
   { quote: 'Alles is hetzelfde, maar alles is anders. Dit is mijn nieuw hoofdstuk.', color: '#FAD5DA' },
   { quote: 'Ik wil een bakfiets waar mijn hond de kop uitsteekt, zijn oren waaiend in de wind.', color: '#BEE9E9' },
   { quote: 'De geur is de moederlijke geborgenheid om je in te wentelen.', color: '#E2D4F0' },
-  { quote: 'Hopelijk alleen weer mezelf.', color: '#FAE5CE' },
+  { quote: 'Aan deze kant van Morpheus\' oever is er ook wat reuring.', color: '#FAE5CE' },
 ]
 
 export default function HeroSlider() {
