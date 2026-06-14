@@ -10,7 +10,7 @@ const links = [
   { href: '/kattenbellen', label: 'Kattenbellen' },
   { href: '/over',         label: 'Over' },
   { href: '/contact',      label: 'Contact' },
-  { href: '#',             label: 'Nieuwsbrief', highlight: true },
+  { href: 'https://substack.com/@marieboddaert', label: 'Nieuwsbrief', highlight: true, external: true },
 ]
 
 export default function NavLinks() {
@@ -18,18 +18,25 @@ export default function NavLinks() {
 
   return (
     <nav className="header-nav" aria-label="Hoofdnavigatie">
-      {links.map(({ href, label, highlight }) => (
-        <Link
-          key={label}
-          href={href}
-          className={[
-            pathname === href ? 'nav-active' : '',
-            highlight ? 'nav-highlight' : '',
-          ].filter(Boolean).join(' ')}
-        >
-          {label}
-        </Link>
-      ))}
+      {links.map(({ href, label, highlight, external }) => {
+        const cls = [
+          !external && pathname === href ? 'nav-active' : '',
+          highlight ? 'nav-highlight' : '',
+        ].filter(Boolean).join(' ')
+
+        if (external) {
+          return (
+            <a key={label} href={href} className={cls} target="_blank" rel="noopener noreferrer">
+              {label}
+            </a>
+          )
+        }
+        return (
+          <Link key={label} href={href} className={cls || undefined}>
+            {label}
+          </Link>
+        )
+      })}
     </nav>
   )
 }
