@@ -37,10 +37,10 @@ export default async function Over() {
   const services  = cms?.services?.length ? cms.services : DEFAULTS.services
   const slogan    = cms?.slogan    ?? DEFAULTS.slogan
   const socials   = {
-    instagram: cms?.instagram ?? DEFAULTS.instagram,
-    linkedin:  cms?.linkedin  ?? DEFAULTS.linkedin,
-    blogger:   cms?.blogger   ?? DEFAULTS.blogger,
-    substack:  cms?.substack  ?? DEFAULTS.substack,
+    instagram: cms?.instagram || DEFAULTS.instagram,
+    linkedin:  cms?.linkedin  || DEFAULTS.linkedin,
+    blogger:   cms?.blogger   || DEFAULTS.blogger,
+    substack:  cms?.substack  || DEFAULTS.substack,
   }
 
   const socialLinks = [
