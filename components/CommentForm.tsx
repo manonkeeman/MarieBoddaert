@@ -3,10 +3,10 @@
 import { useState, useEffect } from 'react'
 
 interface Comment {
-  _id: string
+  id: string
   name: string
   message: string
-  createdAt: string
+  created_at: string
 }
 
 export default function CommentForm({ postTitle, postSlug }: { postTitle: string; postSlug: string }) {
@@ -50,11 +50,11 @@ export default function CommentForm({ postTitle, postSlug }: { postTitle: string
         <div className="comment-list">
           <h3 className="comment-heading">Reacties ({comments.length})</h3>
           {comments.map(c => (
-            <div key={c._id} className="comment-item">
+            <div key={c.id} className="comment-item">
               <div className="comment-item-meta">
                 <span className="comment-item-name">{c.name}</span>
                 <span className="comment-item-date">
-                  {new Date(c.createdAt).toLocaleDateString('nl-NL', {
+                  {new Date(c.created_at).toLocaleDateString('nl-NL', {
                     day: 'numeric', month: 'long', year: 'numeric',
                   })}
                 </span>

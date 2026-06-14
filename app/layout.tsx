@@ -8,7 +8,7 @@ const nunito   = Nunito({ subsets: ['latin'], variable: '--font-nunito' })
 const playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-playfair' })
 const pacifico = Pacifico({ weight: '400', subsets: ['latin'], variable: '--font-pacifico' })
 
-const BASE = process.env.NEXT_PUBLIC_SITE_URL || 'https://marie-boddaert.netlify.app'
+const BASE = process.env.NEXT_PUBLIC_SITE_URL || 'https://marieboddaert.nl'
 
 const OG_TITLE       = 'Marie H. Boddaert — Verhalen, gedichten & kattenbellen'
 const OG_DESCRIPTION = 'Marie H. Boddaert schrijft verhalen, gedichten en gevatte teksten. Psychologe uit Leiden, geïnspireerd door mensen, culturen en karakters. Op verzoek en aanvraag.'
@@ -66,6 +66,7 @@ const jsonLd = {
       'https://www.linkedin.com/in/marieboddaert/',
       'https://www.instagram.com/bodhimari/',
       'https://dewereldvanmarie.blogspot.com',
+      'https://substack.com/@marieboddaert',
     ],
     alumniOf: { '@type': 'CollegeOrUniversity', name: 'Universiteit Leiden' },
     knowsAbout: ['Psychologie', 'Schrijven', 'Poëzie', 'Content'],

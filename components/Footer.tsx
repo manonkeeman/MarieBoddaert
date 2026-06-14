@@ -4,7 +4,7 @@ import { SiSubstack } from 'react-icons/si'
 
 const socials = [
   { label: 'Instagram', href: 'https://www.instagram.com/bodhimari/',         icon: FaInstagram },
-  { label: 'Substack',  href: '#',                                             icon: SiSubstack  },
+  { label: 'Substack',  href: 'https://substack.com/@marieboddaert',           icon: SiSubstack  },
   { label: 'LinkedIn',  href: 'https://www.linkedin.com/in/marieboddaert/',   icon: FaLinkedin  },
   { label: 'Blogger',   href: 'https://dewereldvanmarie.blogspot.com',         icon: FaBlogger   },
 ]
