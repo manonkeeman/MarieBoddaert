@@ -1,4 +1,5 @@
 import { ImageResponse } from 'next/og'
+import { createSupabaseAdminClient } from '@/lib/supabase-server'
 
 export const alt = 'Marie H. Boddaert — Blog'
 export const size = { width: 1200, height: 630 }
@@ -6,16 +7,37 @@ export const contentType = 'image/png'
 
 const BASE = process.env.NEXT_PUBLIC_SITE_URL || 'https://marie-boddaert.netlify.app'
 
+async function fetchPhoto(url: string): Promise<string | null> {
+  try {
+    const res = await fetch(url, { cache: 'no-store' })
+    if (!res.ok) return null
+    const buf = await res.arrayBuffer()
+    const mime = res.headers.get('content-type') ?? 'image/jpeg'
+    return `data:${mime};base64,${Buffer.from(buf).toString('base64')}`
+  } catch {
+    return null
+  }
+}
+
 export default async function Image() {
-  // Foto ophalen via URL (werkt in productie en lokaal)
+  // Probeer foto van Supabase (wat Marie heeft geüpload)
   let photoSrc: string | null = null
   try {
-    const res = await fetch(`${BASE}/marie.png`)
-    if (res.ok) {
-      const buf = await res.arrayBuffer()
-      photoSrc = `data:image/png;base64,${Buffer.from(buf).toString('base64')}`
+    const supabase = createSupabaseAdminClient()
+    const { data } = await supabase
+      .from('about')
+      .select('photo_url')
+      .eq('id', 'about-page')
+      .single()
+    if (data?.photo_url) {
+      photoSrc = await fetchPhoto(data.photo_url)
     }
   } catch {}
+
+  // Fallback: huidige profielfoto op de site
+  if (!photoSrc) {
+    photoSrc = await fetchPhoto(`${BASE}/marie-paco.jpeg`)
+  }
 
   return new ImageResponse(
     <div style={{
@@ -72,7 +94,7 @@ export default async function Image() {
       {/* Foto rechts */}
       {photoSrc ? (
         <div style={{ display: 'flex', zIndex: 1, flexShrink: 0, marginLeft: 60 }}>
-          <img src={photoSrc} width={260} height={260}
+          <img src={photoSrc} width={280} height={370}
             style={{ objectFit: 'cover', objectPosition: 'top',
               border: '3px solid #2A1A2A', boxShadow: '8px 8px 0 #2A1A2A' }}
           />
@@ -80,7 +102,7 @@ export default async function Image() {
       ) : (
         <div style={{
           display: 'flex', zIndex: 1, flexShrink: 0, marginLeft: 60,
-          width: 260, height: 260,
+          width: 280, height: 370,
           background: 'rgba(255,255,255,0.4)',
           border: '3px solid #2A1A2A',
           alignItems: 'center', justifyContent: 'center',
