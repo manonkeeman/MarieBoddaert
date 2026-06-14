@@ -1,13 +1,13 @@
 import { ImageResponse } from 'next/og'
 import { createSupabaseAdminClient } from '@/lib/supabase-server'
+import fs from 'fs'
+import path from 'path'
 
 export const alt = 'Marie H. Boddaert — Blog'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
-const BASE = process.env.NEXT_PUBLIC_SITE_URL || 'https://marieboddaert.nl'
-
-async function fetchPhoto(url: string): Promise<string | null> {
+async function fetchRemotePhoto(url: string): Promise<string | null> {
   try {
     const res = await fetch(url, { cache: 'no-store' })
     if (!res.ok) return null
@@ -19,8 +19,19 @@ async function fetchPhoto(url: string): Promise<string | null> {
   }
 }
 
+function readLocalPhoto(filename: string): string | null {
+  try {
+    const filePath = path.join(process.cwd(), 'public', filename)
+    const buf = fs.readFileSync(filePath)
+    const ext = path.extname(filename).slice(1).replace('jpg', 'jpeg')
+    return `data:image/${ext};base64,${buf.toString('base64')}`
+  } catch {
+    return null
+  }
+}
+
 export default async function Image() {
-  // Probeer foto van Supabase (wat Marie heeft geüpload)
+  // 1. Probeer foto die Marie heeft geüpload in Supabase
   let photoSrc: string | null = null
   try {
     const supabase = createSupabaseAdminClient()
@@ -30,13 +41,13 @@ export default async function Image() {
       .eq('id', 'about-page')
       .single()
     if (data?.photo_url) {
-      photoSrc = await fetchPhoto(data.photo_url)
+      photoSrc = await fetchRemotePhoto(data.photo_url)
     }
   } catch {}
 
-  // Fallback: huidige profielfoto op de site
+  // 2. Vaste fallback: marie-over-mij.jpeg rechtstreeks van bestandssysteem
   if (!photoSrc) {
-    photoSrc = await fetchPhoto(`${BASE}/marie-over-mij.jpeg`)
+    photoSrc = readLocalPhoto('marie-over-mij.jpeg')
   }
 
   return new ImageResponse(
