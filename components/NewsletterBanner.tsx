@@ -7,7 +7,7 @@ export default function NewsletterBanner() {
           <p>Schrijf je in voor Marie&apos;s nieuwsbrief en ontvang nieuwe posts direct in je inbox.</p>
         </div>
         <a
-          href="#"
+          href="https://substack.com/@marieboddaert"
           target="_blank"
           rel="noopener noreferrer"
           className="btn btn-dark"

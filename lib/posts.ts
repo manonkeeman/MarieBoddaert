@@ -1,4 +1,4 @@
-import { createSupabaseServerClient } from './supabase-server'
+import { createSupabaseAdminClient } from './supabase-server'
 
 export { getReadingTime } from './utils'
 
@@ -15,7 +15,7 @@ export interface Post {
 
 export async function getAllPosts(): Promise<Post[]> {
   try {
-    const supabase = createSupabaseServerClient()
+    const supabase = createSupabaseAdminClient()
     const { data, error } = await supabase
       .from('posts')
       .select('slug, title, date, excerpt, content, category, color, emoji')
@@ -31,7 +31,7 @@ export async function getAllPosts(): Promise<Post[]> {
 
 export async function getPostBySlug(slug: string): Promise<Post | undefined> {
   try {
-    const supabase = createSupabaseServerClient()
+    const supabase = createSupabaseAdminClient()
     const { data, error } = await supabase
       .from('posts')
       .select('slug, title, date, excerpt, content, category, color, emoji')

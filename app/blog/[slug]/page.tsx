@@ -8,7 +8,7 @@ import type { Metadata } from 'next'
 
 export const revalidate = 3600
 
-const BASE = process.env.NEXT_PUBLIC_SITE_URL || 'https://marie-boddaert.netlify.app'
+const BASE = process.env.NEXT_PUBLIC_SITE_URL || 'https://marieboddaert.nl'
 
 function formatDate(d: string) {
   return new Date(d).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' })
