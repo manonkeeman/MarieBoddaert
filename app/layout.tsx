@@ -11,7 +11,7 @@ const pacifico = Pacifico({ weight: '400', subsets: ['latin'], variable: '--font
 const BASE = process.env.NEXT_PUBLIC_SITE_URL || 'https://marieboddaert.nl'
 
 const OG_TITLE       = 'Marie H. Boddaert — Verhalen, gedichten & kattenbellen'
-const OG_DESCRIPTION = 'Marie H. Boddaert schrijft verhalen, gedichten en gevatte teksten. Psychologe uit Leiden, geïnspireerd door mensen, culturen en karakters. Op verzoek en aanvraag.'
+const OG_DESCRIPTION = 'Marie H. Boddaert schrijft verhalen, gedichten en gevatte teksten. Geïnspireerd door mensen, culturen en karakters. Op verzoek en aanvraag.'
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE),

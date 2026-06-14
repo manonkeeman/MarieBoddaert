@@ -8,7 +8,7 @@ export const revalidate = 3600
 
 export const metadata: Metadata = {
   title: 'Over mij',
-  description: 'Marie H. Boddaert schrijft blogs, gedichten, kattenbellen en gevatte teksten. Psychologe uit Leiden, moeder van drie, eigenaar van Paco.',
+  description: 'Marie H. Boddaert schrijft blogs, gedichten, kattenbellen en gevatte teksten. Geïnspireerd door mensen, culturen en karakters. Op verzoek en aanvraag.',
 }
 
 const DEFAULTS = {
