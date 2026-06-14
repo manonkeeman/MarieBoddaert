@@ -98,6 +98,39 @@ create policy "Publiek reactions aanmaken"
   on public.reactions for insert
   with check (true);
 
+-- Admin (ingelogde beheerder) schrijfrechten
+create policy "Admin about bijwerken"
+  on public.about for update
+  using (auth.role() = 'authenticated');
+
+create policy "Admin about invoegen"
+  on public.about for insert
+  with check (auth.role() = 'authenticated');
+
+create policy "Admin posts aanmaken"
+  on public.posts for insert
+  with check (auth.role() = 'authenticated');
+
+create policy "Admin posts wijzigen"
+  on public.posts for update
+  using (auth.role() = 'authenticated');
+
+create policy "Admin posts verwijderen"
+  on public.posts for delete
+  using (auth.role() = 'authenticated');
+
+create policy "Admin alle posts lezen"
+  on public.posts for select
+  using (auth.role() = 'authenticated');
+
+create policy "Admin comments wijzigen"
+  on public.comments for update
+  using (auth.role() = 'authenticated');
+
+create policy "Admin comments verwijderen"
+  on public.comments for delete
+  using (auth.role() = 'authenticated');
+
 -- ── Storage bucket voor afbeeldingen ───────────────────────
 -- Maak dit aan via Supabase → Storage → New bucket:
 -- naam: marie-images, public: true
