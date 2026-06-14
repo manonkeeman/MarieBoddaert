@@ -42,6 +42,16 @@ export default function AdminNav() {
         ))}
       </nav>
 
+      <a
+        href="/handleiding-marie.html"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="admin-nav-link"
+        style={{ marginTop: 'auto', opacity: 0.7, fontSize: '0.8rem' }}
+      >
+        📖 Handleiding
+      </a>
+
       <button onClick={handleLogout} className="admin-logout-btn">
         Uitloggen
       </button>

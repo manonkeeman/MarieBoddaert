@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Handleiding — marieboddaert.nl</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --pink:   #FBCFDB;
+      --purple: #E8D0F5;
+      --blue:   #C5E5EF;
+      --mint:   #C8EAD8;
+      --border: #2A1A2A;
+      --text:   #2A1A2A;
+      --muted:  #7A6A7A;
+      --bg:     #FDFBFD;
+    }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    /* PDF knop */
+    .pdf-bar {
+      background: var(--border);
+      padding: 12px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .pdf-bar span { color: rgba(255,255,255,0.7); font-size: 13px; }
+    .pdf-btn {
+      background: var(--pink);
+      color: var(--border);
+      border: 2px solid var(--pink);
+      padding: 8px 22px;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      font-size: 13px;
+      cursor: pointer;
+      border-radius: 4px;
+      letter-spacing: 0.04em;
+      transition: background 0.15s;
+    }
+    .pdf-btn:hover { background: white; }
+
+    @media print { .pdf-bar { display: none; } }
+
+    /* COVER */
+    .cover {
+      background: linear-gradient(135deg, var(--pink) 0%, var(--purple) 50%, var(--blue) 100%);
+      padding: 72px 60px 60px;
+      border-bottom: 3px solid var(--border);
+      position: relative;
+      overflow: hidden;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .cover::before {
+      content: '';
+      position: absolute;
+      width: 400px; height: 400px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.18);
+      top: -200px; right: -100px;
+    }
+    .cover-label {
+      font-size: 11px; font-weight: 800;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 16px;
+    }
+    .cover h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 48px; line-height: 1.15; margin-bottom: 12px;
+    }
+    .cover-sub { font-size: 17px; color: var(--muted); font-weight: 600; margin-bottom: 32px; }
+    .cover-meta { display: flex; gap: 16px; flex-wrap: wrap; }
+    .cover-pill {
+      background: rgba(255,255,255,0.65);
+      border: 2px solid var(--border);
+      padding: 6px 18px; font-size: 12px; font-weight: 700;
+      letter-spacing: 0.06em; border-radius: 4px;
+    }
+
+    /* LAYOUT */
+    .content { max-width: 820px; margin: 0 auto; padding: 60px 40px 80px; }
+
+    /* CHAPTER */
+    .chapter { margin-bottom: 56px; }
+    .chapter-header {
+      display: flex; align-items: center; gap: 16px;
+      margin-bottom: 24px; padding-bottom: 16px;
+      border-bottom: 2px solid var(--border);
+    }
+    .chapter-num {
+      width: 40px; height: 40px;
+      background: var(--border); color: white;
+      border-radius: 50%; display: flex;
+      align-items: center; justify-content: center;
+      font-weight: 800; font-size: 16px; flex-shrink: 0;
+    }
+    .chapter h2 { font-family: 'Playfair Display', serif; font-size: 26px; }
+
+    /* STEPS */
+    .steps { list-style: none; }
+    .steps li { display: flex; gap: 16px; margin-bottom: 16px; align-items: flex-start; }
+    .step-num {
+      width: 28px; height: 28px;
+      background: var(--pink); border: 2px solid var(--border);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 12px; flex-shrink: 0; margin-top: 2px;
+    }
+    .steps li p { flex: 1; }
+
+    /* CALLOUTS */
+    .callout {
+      border-left: 4px solid var(--border);
+      background: rgba(255,255,255,0.8);
+      border-radius: 0 8px 8px 0;
+      padding: 14px 20px; margin: 20px 0; font-size: 14px;
+    }
+    .callout.tip  { border-color: #5BAD8C; background: #F0FAF5; }
+    .callout.warn { border-color: #E08030; background: #FFF6EE; }
+    .callout.info { border-color: #7070CC; background: #F2F2FF; }
+    .callout strong {
+      display: block; margin-bottom: 4px;
+      font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;
+    }
+
+    /* URL */
+    .url {
+      display: inline-block; background: var(--border); color: white;
+      font-family: monospace; font-size: 13px;
+      padding: 3px 10px; border-radius: 4px;
+    }
+
+    /* TABLE */
+    .field-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+    .field-table th {
+      text-align: left; font-size: 11px; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--muted);
+      padding: 8px 12px; border-bottom: 2px solid var(--border);
+    }
+    .field-table td {
+      padding: 10px 12px; border-bottom: 1px solid rgba(42,26,42,0.1); vertical-align: top;
+    }
+    .field-table tr:last-child td { border-bottom: none; }
+    .field-name { font-weight: 700; }
+
+    /* CHECKLIST */
+    .checklist { list-style: none; }
+    .checklist li {
+      padding: 10px 0; border-bottom: 1px solid rgba(42,26,42,0.08);
+      display: flex; gap: 12px; align-items: flex-start; font-size: 14px;
+    }
+    .checklist li:last-child { border-bottom: none; }
+    .check-box {
+      width: 20px; height: 20px; border: 2px solid var(--border);
+      border-radius: 4px; flex-shrink: 0; margin-top: 1px;
+    }
+    .todo-label {
+      font-size: 10px; font-weight: 800; letter-spacing: 0.1em;
+      text-transform: uppercase; background: var(--pink);
+      border: 1.5px solid var(--border); padding: 1px 7px;
+      border-radius: 3px; white-space: nowrap; margin-left: auto;
+    }
+
+    h3 { font-size: 17px; margin: 28px 0 12px; font-weight: 800; }
+
+    /* FOOTER */
+    .footer {
+      background: var(--border); color: white;
+      padding: 32px 40px;
+      display: flex; justify-content: space-between;
+      align-items: center; flex-wrap: wrap; gap: 16px;
+      -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    }
+    .footer-brand { font-family: 'Playfair Display', serif; font-size: 22px; }
+    .footer-sub   { font-size: 12px; opacity: 0.6; margin-top: 4px; }
+    .footer-contact { font-size: 13px; text-align: right; opacity: 0.85; }
+    .footer-contact a { color: white; }
+
+    @media print {
+      @page { margin: 1.5cm; }
+      .chapter { page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- PDF knop -->
+<div class="pdf-bar">
+  <span>Handleiding marieboddaert.nl — Manonit.com</span>
+  <button class="pdf-btn" onclick="window.print()">⬇ Opslaan als PDF</button>
+</div>
+
+<!-- COVER -->
+<div class="cover">
+  <p class="cover-label">Manonit.com · Klanthandleiding</p>
+  <h1>Handleiding<br>marieboddaert.nl</h1>
+  <p class="cover-sub">Alles wat je nodig hebt om je website zelf te beheren</p>
+  <div class="cover-meta">
+    <span class="cover-pill">📅 Juni 2026</span>
+    <span class="cover-pill">👤 Marie H. Boddaert</span>
+    <span class="cover-pill">🔧 Versie 1.0</span>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- 1. INLOGGEN -->
+  <div class="chapter">
+    <div class="chapter-header">
+      <div class="chapter-num">1</div>
+      <h2>Inloggen op het beheerpaneel</h2>
+    </div>
+    <ol class="steps">
+      <li>
+        <div class="step-num">1</div>
+        <p>Ga naar <span class="url">marieboddaert.nl/admin</span> in je browser.</p>
+      </li>
+      <li>
+        <div class="step-num">2</div>
+        <p>Vul je <strong>e-mailadres</strong> en <strong>wachtwoord</strong> in en klik op <em>Inloggen</em>.</p>
+      </li>
+      <li>
+        <div class="step-num">3</div>
+        <p>Je ziet het dashboard met drie secties:<br>
+        <strong>Posts</strong> · <strong>Over mij</strong> · <strong>Reacties</strong></p>
+      </li>
+    </ol>
+    <div class="callout tip">
+      <strong>💡 Tip</strong>
+      Sla <strong>marieboddaert.nl/admin</strong> op als bladwijzer in je browser, dan hoef je de link niet elke keer opnieuw in te typen.
+    </div>
+  </div>
+
+  <!-- 2. BLOG POSTS -->
+  <div class="chapter">
+    <div class="chapter-header">
+      <div class="chapter-num">2</div>
+      <h2>Blog posts beheren</h2>
+    </div>
+    <p style="margin-bottom:20px">Via <em>Posts</em> maak je nieuwe berichten aan, bewerk je bestaande teksten en verwijder je posts.</p>
+
+    <h3>Nieuwe post aanmaken</h3>
+    <ol class="steps">
+      <li><div class="step-num">1</div><p>Klik op <strong>+ Nieuwe post</strong>.</p></li>
+      <li><div class="step-num">2</div><p>Vul alle velden in (zie tabel hieronder).</p></li>
+      <li><div class="step-num">3</div><p>Klik op <strong>Opslaan als concept</strong> om tussendoor te bewaren zonder dat de post zichtbaar wordt.</p></li>
+      <li><div class="step-num">4</div><p>Zet de schakelaar <strong>Publiceren</strong> aan als de post klaar is. Hij is dan direct zichtbaar op de site.</p></li>
+    </ol>
+
+    <table class="field-table" style="margin-top:24px">
+      <thead>
+        <tr><th>Veld</th><th>Wat vul je in?</th><th>Verplicht?</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="field-name">Titel</td><td>De naam van het verhaal of gedicht</td><td>✅ Ja</td></tr>
+        <tr><td class="field-name">Inhoud</td><td>De volledige tekst. Gebruik de werkbalk voor opmaak (vet, cursief, koppen, lijsten).</td><td>✅ Ja</td></tr>
+        <tr><td class="field-name">Samenvatting</td><td>Korte introductietekst die op de homepage getoond wordt (1–2 zinnen)</td><td>✅ Ja</td></tr>
+        <tr><td class="field-name">Categorie</td><td>Kies uit: Verhalen · Gedichten · Kattenbellen</td><td>✅ Ja</td></tr>
+        <tr><td class="field-name">Kleur</td><td>Achtergrondkleur van de banner. Kies een van de zes pastelkleuren.</td><td>Nee</td></tr>
+        <tr><td class="field-name">Emoji</td><td>Kleine emoji naast de post op de homepage</td><td>Nee</td></tr>
+        <tr><td class="field-name">Publiceren</td><td>Schakelaar aan = zichtbaar. Uit = concept (alleen jij ziet het).</td><td>—</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Bestaande post bewerken</h3>
+    <ol class="steps">
+      <li><div class="step-num">1</div><p>Ga naar <em>Posts</em> en klik op de post die je wilt aanpassen.</p></li>
+      <li><div class="step-num">2</div><p>Pas de tekst of velden aan en klik op <strong>Opslaan</strong>.</p></li>
+    </ol>
+
+    <h3>Post verwijderen</h3>
+    <ol class="steps">
+      <li><div class="step-num">1</div><p>Open de post en scrol naar beneden.</p></li>
+      <li><div class="step-num">2</div><p>Klik op <strong>Verwijderen</strong> en bevestig. Dit kan niet ongedaan worden gemaakt.</p></li>
+    </ol>
+    <div class="callout warn">
+      <strong>⚠️ Let op</strong>
+      Een verwijderde post kan niet worden hersteld. Zet hem liever op concept als je twijfelt.
+    </div>
+  </div>
+
+  <!-- 3. OVER MIJ -->
+  <div class="chapter">
+    <div class="chapter-header">
+      <div class="chapter-num">3</div>
+      <h2>Over mij pagina aanpassen</h2>
+    </div>
+    <p style="margin-bottom:20px">Via <em>Over mij</em> pas je de teksten, foto en sociale links aan op de pagina <span class="url">marieboddaert.nl/over</span>.</p>
+
+    <ol class="steps">
+      <li><div class="step-num">1</div><p>Klik op <strong>Over mij</strong> in het menu.</p></li>
+      <li><div class="step-num">2</div><p>Pas de gewenste velden aan (zie tabel).</p></li>
+      <li><div class="step-num">3</div><p>Klik op <strong>Opslaan</strong>. De wijziging is direct zichtbaar.</p></li>
+    </ol>
+
+    <table class="field-table" style="margin-top:20px">
+      <thead>
+        <tr><th>Veld</th><th>Wat vul je in?</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="field-name">Tagline</td><td>Grote tekst bovenaan de pagina (bijv. <em>Marie H. Boddaert schrijft.</em>)</td></tr>
+        <tr><td class="field-name">Profielfoto</td><td>Klik op <em>Foto kiezen</em> en upload een nieuwe foto (JPG of PNG). De foto verschijnt ook als deelafbeelding op WhatsApp en social media.</td></tr>
+        <tr><td class="field-name">Biografie</td><td>Je persoonlijke tekst. Gebruik de werkbalk voor opmaak.</td></tr>
+        <tr><td class="field-name">Slogan</td><td>Kleine tekst onderaan de bio (bijv. <em>Gelukkig kan ze nog wel schrijven.</em>)</td></tr>
+        <tr><td class="field-name">Schrijfstijlen</td><td>Één stijl per regel: Blogs, Gedichten, Kattenbellen, etc.</td></tr>
+        <tr><td class="field-name">Instagram</td><td><em>https://www.instagram.com/bodhimari/</em></td></tr>
+        <tr><td class="field-name">LinkedIn</td><td>Volledige URL naar je LinkedIn-profiel</td></tr>
+        <tr><td class="field-name">Blogger</td><td>Volledige URL naar je Blogger-blog</td></tr>
+        <tr><td class="field-name">Substack</td><td><em>https://substack.com/@marieboddaert</em></td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout tip">
+      <strong>💡 Tip — foto uploaden</strong>
+      Upload een portretfoto (staand formaat, bijv. 600×800 px). Hoe groter en scherper, hoe mooier het er op de site en bij het delen uitziet.
+    </div>
+  </div>
+
+  <!-- 4. REACTIES -->
+  <div class="chapter">
+    <div class="chapter-header">
+      <div class="chapter-num">4</div>
+      <h2>Reacties goedkeuren of afwijzen</h2>
+    </div>
+    <p style="margin-bottom:20px">Lezers kunnen een reactie achterlaten onder een post. Die zijn pas zichtbaar als jij ze goedkeurt.</p>
+
+    <ol class="steps">
+      <li><div class="step-num">1</div><p>Klik op <strong>Reacties</strong> in het menu.</p></li>
+      <li><div class="step-num">2</div><p>Je ziet alle wachtende reacties met naam, bericht en datum.</p></li>
+      <li><div class="step-num">3</div><p>Klik op <strong>✓ Goedkeuren</strong> om de reactie zichtbaar te maken op de site.</p></li>
+      <li><div class="step-num">4</div><p>Klik op <strong>✗ Afwijzen</strong> om de reactie te verbergen (niet verwijderd).</p></li>
+      <li><div class="step-num">5</div><p>Klik op <strong>🗑 Verwijderen</strong> om de reactie permanent te wissen.</p></li>
+    </ol>
+
+    <div class="callout info">
+      <strong>ℹ️ Hoe werkt het?</strong>
+      Nieuwe reacties zijn automatisch <em>niet</em> zichtbaar totdat jij ze goedkeurt. Ongewenste reacties verschijnen dus nooit zomaar op je site.
+    </div>
+  </div>
+
+  <!-- 5. UITLOGGEN -->
+  <div class="chapter">
+    <div class="chapter-header">
+      <div class="chapter-num">5</div>
+      <h2>Uitloggen</h2>
+    </div>
+    <ol class="steps">
+      <li><div class="step-num">1</div><p>Klik op <strong>Uitloggen</strong> onderaan de zijbalk.</p></li>
+      <li><div class="step-num">2</div><p>Je wordt teruggestuurd naar de inlogpagina.</p></li>
+    </ol>
+    <div class="callout tip">
+      <strong>💡 Tip</strong>
+      Log altijd uit als je klaar bent, zeker op een gedeelde of openbare computer.
+    </div>
+  </div>
+
+  <!-- 6. AFRONDING -->
+  <div class="chapter">
+    <div class="chapter-header">
+      <div class="chapter-num">6</div>
+      <h2>Nog te doen — afronding door Manonit</h2>
+    </div>
+    <p style="margin-bottom:20px">De onderstaande punten worden opgepakt om het project volledig af te ronden.</p>
+
+    <ul class="checklist">
+      <li>
+        <div class="check-box"></div>
+        <div>
+          <strong>Eigen domein koppelen</strong><br>
+          <span style="font-size:13px;color:var(--muted)">marieboddaert.nl koppelen aan Netlify via DNS-instellingen bij de domeinhoster.</span>
+        </div>
+        <span class="todo-label">Dinsdag</span>
+      </li>
+      <li>
+        <div class="check-box"></div>
+        <div>
+          <strong>Site-URL instellen</strong><br>
+          <span style="font-size:13px;color:var(--muted)">Environment variable <code>NEXT_PUBLIC_SITE_URL=https://marieboddaert.nl</code> instellen zodat alle links en deelafbeeldingen naar het juiste domein verwijzen.</span>
+        </div>
+        <span class="todo-label">Dinsdag</span>
+      </li>
+      <li>
+        <div class="check-box"></div>
+        <div>
+          <strong>Deelafbeelding testen</strong><br>
+          <span style="font-size:13px;color:var(--muted)">Na de domeininstelling controleren of de deelafbeelding (WhatsApp, LinkedIn) correct verschijnt met jouw foto.</span>
+        </div>
+        <span class="todo-label">Dinsdag</span>
+      </li>
+      <li>
+        <div class="check-box"></div>
+        <div>
+          <strong>SSL-certificaat</strong><br>
+          <span style="font-size:13px;color:var(--muted)">Netlify regelt dit automatisch via Let's Encrypt zodra het domein correct is ingesteld. Geen actie nodig.</span>
+        </div>
+        <span class="todo-label">Dinsdag</span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- 7. HANDIGE LINKS -->
+  <div class="chapter">
+    <div class="chapter-header">
+      <div class="chapter-num">7</div>
+      <h2>Handige links</h2>
+    </div>
+    <table class="field-table">
+      <thead><tr><th>Wat</th><th>URL</th></tr></thead>
+      <tbody>
+        <tr><td class="field-name">Jouw website</td><td><span class="url">marieboddaert.nl</span></td></tr>
+        <tr><td class="field-name">Beheerpaneel</td><td><span class="url">marieboddaert.nl/admin</span></td></tr>
+        <tr><td class="field-name">Substack</td><td><span class="url">substack.com/@marieboddaert</span></td></tr>
+        <tr><td class="field-name">Contact Manonit</td><td><span class="url">lets@manonit.com</span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout info">
+      <strong>ℹ️ Vragen of iets werkt niet?</strong>
+      Stuur een berichtje naar <strong>lets@manonit.com</strong> — ik help je verder!
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <div>
+    <div class="footer-brand">Manonit.com</div>
+    <div class="footer-sub">Webdesign &amp; development · Juni 2026</div>
+  </div>
+  <div class="footer-contact">
+    <a href="mailto:lets@manonit.com">lets@manonit.com</a><br>
+    <a href="https://manonit.com">manonit.com</a>
+  </div>
+</div>
+
+</body>
+</html>
