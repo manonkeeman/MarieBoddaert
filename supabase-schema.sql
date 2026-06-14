@@ -1,6 +1,5 @@
 -- ============================================================
 -- Marie Boddaert — Supabase database schema
--- Voer dit uit in Supabase → SQL Editor → New query
 -- ============================================================
 
 -- Posts
@@ -13,7 +12,7 @@ create table public.posts (
   category     text    check (category in ('Verhalen', 'Gedichten', 'Kattenbellen')),
   color        text    default '#FAD5DA',
   emoji        text    default '✍️',
-  content      text    default '',   -- HTML van de rijke teksteditor
+  content      text    default '',
   published    boolean default true,
   created_at   timestamptz default now(),
   updated_at   timestamptz default now()
@@ -29,7 +28,7 @@ create table public.about (
   instagram  text    default 'https://www.instagram.com/bodhimari/',
   linkedin   text    default 'https://www.linkedin.com/in/marieboddaert/',
   blogger    text    default 'https://dewereldvanmarie.blogspot.com',
-  substack   text    default '#',
+  substack   text    default 'https://substack.com/@marieboddaert',
   photo_url  text,
   updated_at timestamptz default now()
 );

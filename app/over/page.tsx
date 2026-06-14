@@ -18,7 +18,7 @@ const DEFAULTS = {
   instagram: 'https://www.instagram.com/bodhimari/',
   linkedin:  'https://www.linkedin.com/in/marieboddaert/',
   blogger:   'https://dewereldvanmarie.blogspot.com',
-  substack:  '#',
+  substack:  'https://substack.com/@marieboddaert',
 }
 
 export default async function Over() {
