@@ -17,11 +17,6 @@ export default function Contact() {
       </div>
 
       <div className="contact-page">
-        <p className="contact-intro">
-          Schrijf me. Over iets wat je las, een samenwerking, een vraag — of gewoon hallo.
-          Ik lees alles en ik schrijf terug.
-        </p>
-
         <div className="contact-form-box">
           <ContactForm />
         </div>
