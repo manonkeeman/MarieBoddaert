@@ -94,7 +94,7 @@ export default async function Image() {
       {/* Foto rechts */}
       {photoSrc ? (
         <div style={{ display: 'flex', zIndex: 1, flexShrink: 0, marginLeft: 60 }}>
-          <img src={photoSrc} width={320} height={502}
+          <img src={photoSrc} width={280} height={502}
             style={{ objectFit: 'cover', objectPosition: '50% 15%',
               border: '3px solid #2A1A2A', boxShadow: '8px 8px 0 #2A1A2A' }}
           />
@@ -102,7 +102,7 @@ export default async function Image() {
       ) : (
         <div style={{
           display: 'flex', zIndex: 1, flexShrink: 0, marginLeft: 60,
-          width: 320, height: 502,
+          width: 280, height: 502,
           background: 'rgba(255,255,255,0.4)',
           border: '3px solid #2A1A2A',
           alignItems: 'center', justifyContent: 'center',
