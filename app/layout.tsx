@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Nunito, Playfair_Display, Pacifico } from 'next/font/google'
+import Script from 'next/script'
 import './globals.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
@@ -8,7 +9,8 @@ const nunito   = Nunito({ subsets: ['latin'], variable: '--font-nunito' })
 const playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-playfair' })
 const pacifico = Pacifico({ weight: '400', subsets: ['latin'], variable: '--font-pacifico' })
 
-const BASE = process.env.NEXT_PUBLIC_SITE_URL || 'https://marie-boddaert.netlify.app'
+const BASE = process.env.NEXT_PUBLIC_SITE_URL || 'https://marieboddaert.nl'
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID
 
 const OG_TITLE       = 'Marie H. Boddaert — Verhalen, gedichten & kattenbellen'
 const OG_DESCRIPTION = 'Marie H. Boddaert schrijft verhalen, gedichten en gevatte teksten. Geïnspireerd door mensen, culturen en karakters. Op verzoek en aanvraag.'
@@ -87,6 +89,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Header />
         <main>{children}</main>
         <Footer />
+        {GA_ID && (
+          <>
+            <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />
+            <Script id="ga-init" strategy="afterInteractive">{`
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', '${GA_ID}');
+            `}</Script>
+          </>
+        )}
       </body>
     </html>
   )
