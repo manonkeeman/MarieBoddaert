@@ -13,13 +13,20 @@ export default function ContactForm() {
     e.preventDefault()
     setStatus('sending')
 
-    try {
-      const res = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ naam, email, onderwerp, bericht }),
-      })
+    const body = new URLSearchParams({
+      'form-name': 'contact',
+      naam,
+      email,
+      onderwerp,
+      bericht,
+    }).toString()
 
+    try {
+      const res = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body,
+      })
       if (res.ok) {
         setStatus('sent')
         setNaam(''); setEmail(''); setOnderwerp(''); setBericht('')
@@ -40,11 +47,21 @@ export default function ContactForm() {
   }
 
   return (
-    <form className="comment-form" onSubmit={handleSubmit}>
+    <form
+      name="contact"
+      method="POST"
+      data-netlify="true"
+      data-netlify-honeypot="bot-field"
+      className="comment-form"
+      onSubmit={handleSubmit}
+    >
+      <input type="hidden" name="form-name" value="contact" />
+      <input type="hidden" name="bot-field" />
+
       <div className="form-group">
         <label htmlFor="naam" className="form-label">Naam</label>
         <input
-          type="text" id="naam" className="form-input"
+          type="text" id="naam" name="naam" className="form-input"
           placeholder="Jouw naam" required
           value={naam} onChange={e => setNaam(e.target.value)}
         />
@@ -52,7 +69,7 @@ export default function ContactForm() {
       <div className="form-group">
         <label htmlFor="email" className="form-label">E-mailadres</label>
         <input
-          type="email" id="email" className="form-input"
+          type="email" id="email" name="email" className="form-input"
           placeholder="jij@voorbeeld.nl" required
           value={email} onChange={e => setEmail(e.target.value)}
         />
@@ -60,7 +77,7 @@ export default function ContactForm() {
       <div className="form-group">
         <label htmlFor="onderwerp" className="form-label">Onderwerp</label>
         <input
-          type="text" id="onderwerp" className="form-input"
+          type="text" id="onderwerp" name="onderwerp" className="form-input"
           placeholder="Waar gaat je bericht over?"
           value={onderwerp} onChange={e => setOnderwerp(e.target.value)}
         />
@@ -68,7 +85,7 @@ export default function ContactForm() {
       <div className="form-group">
         <label htmlFor="bericht" className="form-label">Bericht</label>
         <textarea
-          id="bericht" className="form-textarea"
+          id="bericht" name="bericht" className="form-textarea"
           placeholder="Schrijf hier je bericht..." rows={5} required
           value={bericht} onChange={e => setBericht(e.target.value)}
         />
