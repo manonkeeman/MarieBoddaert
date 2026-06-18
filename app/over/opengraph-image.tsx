@@ -59,7 +59,7 @@ export default async function Image() {
         </div>
         <div style={{ width: 100, height: 4, background: '#2A1A2A', marginBottom: 22, display: 'flex' }} />
         <div style={{ fontSize: 20, color: '#5A4A5A', fontFamily: 'Georgia, serif', display: 'flex' }}>
-          Schrijver · Psycholoog · Leiden
+          Schrijver · Sliedrecht
         </div>
       </div>
       {photoSrc ? (

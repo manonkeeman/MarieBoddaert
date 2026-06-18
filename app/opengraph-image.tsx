@@ -78,7 +78,7 @@ export default async function Image() {
           }}>Boddaert</span>
         </div>
         <div style={{ width: 100, height: 4, background: '#2A1A2A', marginBottom: 22, display: 'flex' }} />
-        <div style={{ display: 'flex', gap: 12 }}>
+        <div style={{ display: 'flex', gap: 12, marginBottom: 20 }}>
           {['Blogs', 'Gedichten', 'Kattenbellen'].map(cat => (
             <div key={cat} style={{
               display: 'flex', background: 'rgba(255,255,255,0.55)',
@@ -88,6 +88,13 @@ export default async function Image() {
               {cat}
             </div>
           ))}
+        </div>
+        <div style={{
+          display: 'flex', background: '#2A1A2A', color: 'white',
+          padding: '10px 24px', fontSize: 16, fontWeight: 800,
+          letterSpacing: '0.06em',
+        }}>
+          Lees nu op marieboddaert.nl →
         </div>
       </div>
 

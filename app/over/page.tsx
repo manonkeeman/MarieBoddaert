@@ -72,7 +72,7 @@ export default async function Over() {
               <div className="over-block">
                 <p>Marie houdt van iedereen.</p>
                 <p>Zij heeft een diepe interesse voor verschillende culturen, mensen en karakters.</p>
-                <p>Zij studeerde psychologie in Leiden en deze combinatie inspireert haar verhalen.</p>
+                <p>Zij woont in Sliedrecht en deze omgeving inspireert haar verhalen.</p>
               </div>
               <div className="over-block">
                 <p>Marie heeft een hond.</p>

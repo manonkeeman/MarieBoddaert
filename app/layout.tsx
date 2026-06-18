@@ -13,7 +13,7 @@ const BASE = process.env.NEXT_PUBLIC_SITE_URL || 'https://marieboddaert.nl'
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID
 
 const OG_TITLE       = 'Marie H. Boddaert — Verhalen, gedichten & kattenbellen'
-const OG_DESCRIPTION = 'Marie H. Boddaert schrijft verhalen, gedichten en gevatte teksten. Geïnspireerd door mensen, culturen en karakters. Op verzoek en aanvraag.'
+const OG_DESCRIPTION = 'Marie H. Boddaert schrijft verhalen, gedichten en gevatte teksten vanuit Sliedrecht. Op verzoek en aanvraag.'
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE),
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     template: '%s — Marie H. Boddaert',
   },
   description: OG_DESCRIPTION,
-  keywords: ['blog', 'gedichten', 'schrijven', 'kattenbellen', 'psychologie', 'Marie H. Boddaert', 'Leiden', 'content'],
+  keywords: ['blog', 'gedichten', 'schrijven', 'kattenbellen', 'verhalen', 'Marie H. Boddaert', 'Sliedrecht', 'content'],
   authors:  [{ name: 'Marie H. Boddaert', url: 'mailto:mh.boddaert@gmail.com' }],
   creator:  'Marie H. Boddaert',
   openGraph: {
@@ -70,8 +70,8 @@ const jsonLd = {
       'https://dewereldvanmarie.blogspot.com',
       'https://substack.com/@marieboddaert',
     ],
-    alumniOf: { '@type': 'CollegeOrUniversity', name: 'Universiteit Leiden' },
-    knowsAbout: ['Psychologie', 'Schrijven', 'Poëzie', 'Content'],
+    address: { '@type': 'PostalAddress', addressLocality: 'Sliedrecht', addressCountry: 'NL' },
+    knowsAbout: ['Schrijven', 'Poëzie', 'Verhalen', 'Content'],
   },
   inLanguage: 'nl-NL',
 }
