@@ -60,13 +60,19 @@ export default async function Image({ params }: { params: { slug: string } }) {
         </div>
       </div>
 
-      <div style={{ display: 'flex', flex: 1, alignItems: 'flex-start' }}>
+      <div style={{ display: 'flex', flex: 1, alignItems: 'flex-start', flexDirection: 'column', gap: 20 }}>
         <div style={{
           fontSize, fontWeight: 800, color: '#2A1A2A', lineHeight: 1.15,
           fontFamily: 'Georgia, serif',
           maxWidth: '820px', display: 'flex', flexWrap: 'wrap',
         }}>
           {title}
+        </div>
+        <div style={{
+          display: 'flex', background: '#2A1A2A', color: 'white',
+          padding: '10px 24px', fontSize: 16, fontWeight: 800, letterSpacing: '0.06em',
+        }}>
+          Lees het volledige verhaal →
         </div>
       </div>
 

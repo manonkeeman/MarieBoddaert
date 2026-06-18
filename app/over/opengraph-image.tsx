@@ -58,8 +58,15 @@ export default async function Image() {
           <span style={{ display: 'flex', fontFamily: 'Georgia, serif', fontSize: 72, fontWeight: 800, color: '#2A1A2A', lineHeight: 1.05 }}>Boddaert</span>
         </div>
         <div style={{ width: 100, height: 4, background: '#2A1A2A', marginBottom: 22, display: 'flex' }} />
-        <div style={{ fontSize: 20, color: '#5A4A5A', fontFamily: 'Georgia, serif', display: 'flex' }}>
+        <div style={{ fontSize: 20, color: '#5A4A5A', fontFamily: 'Georgia, serif', display: 'flex', marginBottom: 20 }}>
           Schrijver · Sliedrecht
+        </div>
+        <div style={{
+          display: 'flex', background: '#2A1A2A', color: 'white',
+          padding: '10px 24px', fontSize: 16, fontWeight: 800,
+          letterSpacing: '0.06em',
+        }}>
+          Lees nu op marieboddaert.nl →
         </div>
       </div>
       {photoSrc ? (

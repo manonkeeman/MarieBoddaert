@@ -39,12 +39,18 @@ export default async function Image() {
           Gedichten
         </div>
       </div>
-      <div style={{ display: 'flex', flex: 1, alignItems: 'flex-start' }}>
+      <div style={{ display: 'flex', flex: 1, alignItems: 'flex-start', flexDirection: 'column', gap: 20 }}>
         <div style={{
           fontSize: 84, fontWeight: 800, color: '#2A1A2A', lineHeight: 1.1,
           fontFamily: 'Georgia, serif', display: 'flex', flexWrap: 'wrap',
         }}>
           Marie H. Boddaert
+        </div>
+        <div style={{
+          display: 'flex', background: '#2A1A2A', color: 'white',
+          padding: '10px 24px', fontSize: 16, fontWeight: 800, letterSpacing: '0.06em',
+        }}>
+          Lees nu op marieboddaert.nl →
         </div>
       </div>
       <div style={{

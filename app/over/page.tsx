@@ -7,7 +7,7 @@ import ProfilePhoto from '@/components/ProfilePhoto'
 export const revalidate = 3600
 
 export const metadata: Metadata = {
-  title: 'Over mij',
+  title: { absolute: 'Over Marie H. Boddaert — schrijfster uit Sliedrecht' },
   description: 'Marie H. Boddaert schrijft blogs, gedichten, kattenbellen en gevatte teksten. Geïnspireerd door mensen, culturen en karakters. Op verzoek en aanvraag.',
 }
 

@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import ContactForm from './ContactForm'
 
 export const metadata: Metadata = {
-  title: 'Contact',
+  title: { absolute: 'Contact Marie H. Boddaert — schrijfster uit Sliedrecht' },
   description: 'Stuur Marie H. Boddaert een bericht — over iets wat je las, een samenwerking of gewoon hallo.',
 }
 

@@ -3,7 +3,7 @@ import PostGrid from '@/components/PostGrid'
 import type { Metadata } from 'next'
 
 export const revalidate = 3600
-export const metadata: Metadata = { title: 'Gedichten — Marie H. Boddaert' }
+export const metadata: Metadata = { title: { absolute: 'Gedichten van Marie H. Boddaert — lees op marieboddaert.nl' } }
 
 export default async function Gedichten() {
   const posts = (await getAllPosts()).filter(p => p.category === 'Gedichten')
