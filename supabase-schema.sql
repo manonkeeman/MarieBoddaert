@@ -123,6 +123,10 @@ create policy "Admin alle posts lezen"
   on public.posts for select
   using (auth.role() = 'authenticated');
 
+create policy "Admin alle comments lezen"
+  on public.comments for select
+  using (auth.role() = 'authenticated');
+
 create policy "Admin comments wijzigen"
   on public.comments for update
   using (auth.role() = 'authenticated');
@@ -130,11 +134,3 @@ create policy "Admin comments wijzigen"
 create policy "Admin comments verwijderen"
   on public.comments for delete
   using (auth.role() = 'authenticated');
-
--- ── Storage bucket voor afbeeldingen ───────────────────────
--- Maak dit aan via Supabase → Storage → New bucket:
--- naam: marie-images, public: true
-
--- ── Admin gebruiker aanmaken ───────────────────────────────
--- Ga naar Supabase → Authentication → Users → Add user
--- Vul Marie's e-mailadres en een wachtwoord in
