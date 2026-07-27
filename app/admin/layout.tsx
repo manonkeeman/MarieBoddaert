@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import AdminNav from './AdminNav'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: { default: 'Beheer', template: '%s — Beheer' },
   robots: { index: false, follow: false },

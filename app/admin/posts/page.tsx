@@ -56,7 +56,7 @@ export default async function AdminPosts() {
                     <Link href={`/blog/${post.slug}`} target="_blank" className="admin-btn-ghost" title="Bekijk op site">
                       ↗
                     </Link>
-                    <DeletePostButton slug={post.slug} title={post.title} />
+                    <DeletePostButton slug={post.slug} title={post.title} category={post.category} />
                   </td>
                 </tr>
               ))}

@@ -83,6 +83,13 @@ export default function OverMijForm({ initial }: { initial?: AboutData | null })
     if (err) {
       setError(err.message)
     } else {
+      try {
+        await fetch('/api/revalidate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ scope: 'about' }),
+        })
+      } catch {}
       setSaved(true)
       setTimeout(() => setSaved(false), 3000)
     }

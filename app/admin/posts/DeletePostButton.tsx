@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { createClient } from '@/lib/supabase'
 
-export default function DeletePostButton({ slug, title }: { slug: string; title: string }) {
+export default function DeletePostButton({ slug, title, category }: { slug: string; title: string; category: string }) {
   const [busy, setBusy] = useState(false)
   const router = useRouter()
 
@@ -13,6 +13,15 @@ export default function DeletePostButton({ slug, title }: { slug: string; title:
     setBusy(true)
     const supabase = createClient()
     await supabase.from('posts').delete().eq('slug', slug)
+
+    try {
+      await fetch('/api/revalidate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ scope: 'post', slug, category }),
+      })
+    } catch {}
+
     router.refresh()
   }
 

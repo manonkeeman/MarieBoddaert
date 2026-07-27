@@ -87,6 +87,14 @@ export default function PostForm({ initial }: { initial?: PostData }) {
       return
     }
 
+    try {
+      await fetch('/api/revalidate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ scope: 'post', slug, category, previousCategory: initial?.category }),
+      })
+    } catch {}
+
     router.push('/admin/posts')
     router.refresh()
   }
