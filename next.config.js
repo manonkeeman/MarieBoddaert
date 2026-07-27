@@ -25,6 +25,7 @@ const publicHeaders = [
 
 const adminHeaders = [
   { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+  { key: 'Cache-Control', value: 'private, no-store, no-cache, must-revalidate' },
   {
     key: 'Content-Security-Policy',
     value: [
