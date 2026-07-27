@@ -1,0 +1,16 @@
+name: Supabase keep-alive
+
+on:
+  schedule:
+    - cron: '0 6 * * 1,4'
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Supabase (voorkomt pauzeren wegens inactiviteit)
+        run: |
+          curl -sf "https://scfgsdrhirfrpkklvzwi.supabase.co/rest/v1/posts?select=slug&limit=1" \
+            -H "apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNjZmdzZHJoaXJmcnBra2x2endpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE0NTAzMjgsImV4cCI6MjA5NzAyNjMyOH0.dTBbdGDpXu4C3oJqVsA6E6U9wMcSLNvTIAGbo5HOzV4" \
+            -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNjZmdzZHJoaXJmcnBra2x2endpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE0NTAzMjgsImV4cCI6MjA5NzAyNjMyOH0.dTBbdGDpXu4C3oJqVsA6E6U9wMcSLNvTIAGbo5HOzV4"
