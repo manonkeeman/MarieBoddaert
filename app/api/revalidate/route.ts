@@ -1,5 +1,6 @@
 import { revalidatePath } from 'next/cache'
 import { NextResponse } from 'next/server'
+import { createSupabaseServerClient } from '@/lib/supabase-server'
 
 const CATEGORY_PATHS: Record<string, string> = {
   Verhalen: '/verhalen',
@@ -8,6 +9,12 @@ const CATEGORY_PATHS: Record<string, string> = {
 }
 
 export async function POST(request: Request) {
+  const supabase = createSupabaseServerClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) {
+    return NextResponse.json({ error: 'Niet ingelogd' }, { status: 401 })
+  }
+
   const body = await request.json().catch(() => ({}))
   const { scope, slug, category, previousCategory } = body as {
     scope?: 'post' | 'about'
