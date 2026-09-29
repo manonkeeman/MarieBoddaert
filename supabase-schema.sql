@@ -62,7 +62,12 @@ create table public.admins (
   user_id uuid primary key references auth.users (id) on delete cascade
 );
 
-create or replace function public.is_admin()
+-- In een eigen schema dat niet via de Data API bereikbaar is, zodat de
+-- functie niet als RPC aan te roepen is. Policies kunnen 'm wel gebruiken.
+create schema if not exists private;
+grant usage on schema private to anon, authenticated;
+
+create or replace function private.is_admin()
 returns boolean
 language sql
 stable
@@ -72,8 +77,12 @@ as $$
   select exists (select 1 from public.admins where user_id = auth.uid());
 $$;
 
-revoke all on function public.is_admin() from public;
-grant execute on function public.is_admin() to anon, authenticated;
+revoke all on function private.is_admin() from public;
+grant execute on function private.is_admin() to anon, authenticated;
+
+-- Alleen als bij het aanmaken "Enable automatic RLS" aan stond: die
+-- event-trigger functie hoeft niet via de API aanroepbaar te zijn.
+-- revoke execute on function public.rls_auto_enable() from public, anon, authenticated;
 
 -- ── Row Level Security ──────────────────────────────────────
 
@@ -117,39 +126,39 @@ create policy "Admin eigen rij lezen"
 -- lees-policy, anders faalt .select() na een mutatie stil)
 create policy "Admin about bijwerken"
   on public.about for update
-  using (public.is_admin());
+  using (private.is_admin());
 
 create policy "Admin about invoegen"
   on public.about for insert
-  with check (public.is_admin());
+  with check (private.is_admin());
 
 create policy "Admin posts aanmaken"
   on public.posts for insert
-  with check (public.is_admin());
+  with check (private.is_admin());
 
 create policy "Admin posts wijzigen"
   on public.posts for update
-  using (public.is_admin());
+  using (private.is_admin());
 
 create policy "Admin posts verwijderen"
   on public.posts for delete
-  using (public.is_admin());
+  using (private.is_admin());
 
 create policy "Admin alle posts lezen"
   on public.posts for select
-  using (public.is_admin());
+  using (private.is_admin());
 
 create policy "Admin alle comments lezen"
   on public.comments for select
-  using (public.is_admin());
+  using (private.is_admin());
 
 create policy "Admin comments wijzigen"
   on public.comments for update
-  using (public.is_admin());
+  using (private.is_admin());
 
 create policy "Admin comments verwijderen"
   on public.comments for delete
-  using (public.is_admin());
+  using (private.is_admin());
 
 -- ── Storage ─────────────────────────────────────────────────
 
@@ -160,16 +169,16 @@ on conflict (id) do nothing;
 
 create policy "Admin afbeeldingen uploaden"
   on storage.objects for insert
-  with check (bucket_id = 'marie-images' and public.is_admin());
+  with check (bucket_id = 'marie-images' and private.is_admin());
 
 create policy "Admin afbeeldingen wijzigen"
   on storage.objects for update
-  using (bucket_id = 'marie-images' and public.is_admin());
+  using (bucket_id = 'marie-images' and private.is_admin());
 
 create policy "Admin afbeeldingen verwijderen"
   on storage.objects for delete
-  using (bucket_id = 'marie-images' and public.is_admin());
+  using (bucket_id = 'marie-images' and private.is_admin());
 
 create policy "Admin afbeeldingen lezen"
   on storage.objects for select
-  using (bucket_id = 'marie-images' and public.is_admin());
+  using (bucket_id = 'marie-images' and private.is_admin());
