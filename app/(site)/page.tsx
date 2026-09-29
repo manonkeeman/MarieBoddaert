@@ -1,4 +1,4 @@
-import { getAllPosts } from '@/lib/posts'
+ import { getAllPosts } from '@/lib/posts'
 import PostGrid from '@/components/PostGrid'
 import HeroSlider from '@/components/HeroSlider'
 import NewsletterBanner from '@/components/NewsletterBanner'
