@@ -21,7 +21,7 @@ export default function AdminNav() {
     router.refresh()
   }
 
-  if (pathname === '/admin/login') return null
+  if (pathname === '/admin/login' || pathname === '/admin/wachtwoord') return null
 
   return (
     <aside className="admin-sidebar">

@@ -26,8 +26,10 @@ export async function middleware(request: NextRequest) {
 
   const isAdminPath = request.nextUrl.pathname.startsWith('/admin')
   const isLoginPath = request.nextUrl.pathname === '/admin/login'
+  // Link uit de reset-mail: sessie komt pas client-side binnen
+  const isResetPath = request.nextUrl.pathname === '/admin/wachtwoord'
 
-  if (isAdminPath && !isLoginPath && !user) {
+  if (isAdminPath && !isLoginPath && !isResetPath && !user) {
     return NextResponse.redirect(new URL('/admin/login', request.url))
   }
 
