@@ -9,7 +9,6 @@ export default function AdminLogin() {
   const [password, setPassword] = useState('')
   const [error, setError]       = useState('')
   const [loading, setLoading]   = useState(false)
-  const [resetSent, setResetSent] = useState(false)
   const router = useRouter()
 
   async function handleSubmit(e: React.FormEvent) {
@@ -28,25 +27,6 @@ export default function AdminLogin() {
 
     router.push('/admin')
     router.refresh()
-  }
-
-  async function handleForgotPassword() {
-    setError('')
-    if (!email) {
-      setError('Vul eerst je e-mailadres in.')
-      return
-    }
-
-    const supabase = createClient()
-    const { error: resetError } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${window.location.origin}/admin/wachtwoord`,
-    })
-
-    if (resetError) {
-      setError('Versturen mislukt, probeer het later nog eens.')
-      return
-    }
-    setResetSent(true)
   }
 
   return (
@@ -80,14 +60,9 @@ export default function AdminLogin() {
           </label>
 
           {error && <p className="admin-error">{error}</p>}
-          {resetSent && <p className="admin-success">Als dit adres bekend is, staat er een mail met een link in je inbox.</p>}
 
           <button type="submit" className="admin-btn-primary" disabled={loading}>
             {loading ? 'Bezig...' : 'Inloggen'}
-          </button>
-
-          <button type="button" className="admin-link-button" onClick={handleForgotPassword}>
-            Wachtwoord vergeten?
           </button>
         </form>
       </div>
