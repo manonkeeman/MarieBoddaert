@@ -1,5 +1,6 @@
 -- ============================================================
 -- Marie Boddaert — Supabase database schema
+-- Uitvoeren in een LEEG project (SQL Editor of psql).
 -- ============================================================
 
 -- Posts
@@ -54,12 +55,33 @@ create table public.reactions (
   unique (post_slug, emoji)
 );
 
+-- ── Beheerders ──────────────────────────────────────────────
+-- Alleen gebruikers in deze tabel mogen beheren. Ingelogd zijn alleen is
+-- niet genoeg: zo kan iemand die zich via de Auth API aanmeldt niks wijzigen.
+create table public.admins (
+  user_id uuid primary key references auth.users (id) on delete cascade
+);
+
+create or replace function public.is_admin()
+returns boolean
+language sql
+stable
+security definer
+set search_path = ''
+as $$
+  select exists (select 1 from public.admins where user_id = auth.uid());
+$$;
+
+revoke all on function public.is_admin() from public;
+grant execute on function public.is_admin() to anon, authenticated;
+
 -- ── Row Level Security ──────────────────────────────────────
 
 alter table public.posts     enable row level security;
 alter table public.about     enable row level security;
 alter table public.comments  enable row level security;
 alter table public.reactions enable row level security;
+alter table public.admins    enable row level security;
 
 -- Publiek: alleen gepubliceerde posts lezen
 create policy "Publiek posts lezen"
@@ -76,61 +98,78 @@ create policy "Publiek comments lezen"
   on public.comments for select
   using (approved = true);
 
--- Publiek: reactie plaatsen
-create policy "Publiek comments schrijven"
-  on public.comments for insert
-  with check (
-    length(name) > 0 and length(name) <= 100 and
-    length(message) > 0 and length(message) <= 2000
-  );
-
 -- Publiek: emoji reacties lezen
 create policy "Publiek reactions lezen"
   on public.reactions for select
   using (true);
 
--- Publiek: emoji reacties bijwerken
-create policy "Publiek reactions bijwerken"
-  on public.reactions for update
-  using (true);
+-- Reacties plaatsen en emoji-tellers ophogen loopt via /api/comments en
+-- /api/reactions (service role, met validatie). Daarom bewust geen publieke
+-- insert/update policies: anders kan iedereen met de anon key tellers
+-- overschrijven of de validatie omzeilen.
 
-create policy "Publiek reactions aanmaken"
-  on public.reactions for insert
-  with check (true);
+-- Beheerder: eigen rij in admins kunnen zien
+create policy "Admin eigen rij lezen"
+  on public.admins for select
+  using (user_id = auth.uid());
 
--- Admin (ingelogde beheerder) schrijfrechten
+-- Beheerder schrijfrechten (elke schrijf-policy heeft een bijbehorende
+-- lees-policy, anders faalt .select() na een mutatie stil)
 create policy "Admin about bijwerken"
   on public.about for update
-  using (auth.role() = 'authenticated');
+  using (public.is_admin());
 
 create policy "Admin about invoegen"
   on public.about for insert
-  with check (auth.role() = 'authenticated');
+  with check (public.is_admin());
 
 create policy "Admin posts aanmaken"
   on public.posts for insert
-  with check (auth.role() = 'authenticated');
+  with check (public.is_admin());
 
 create policy "Admin posts wijzigen"
   on public.posts for update
-  using (auth.role() = 'authenticated');
+  using (public.is_admin());
 
 create policy "Admin posts verwijderen"
   on public.posts for delete
-  using (auth.role() = 'authenticated');
+  using (public.is_admin());
 
 create policy "Admin alle posts lezen"
   on public.posts for select
-  using (auth.role() = 'authenticated');
+  using (public.is_admin());
 
 create policy "Admin alle comments lezen"
   on public.comments for select
-  using (auth.role() = 'authenticated');
+  using (public.is_admin());
 
 create policy "Admin comments wijzigen"
   on public.comments for update
-  using (auth.role() = 'authenticated');
+  using (public.is_admin());
 
 create policy "Admin comments verwijderen"
   on public.comments for delete
-  using (auth.role() = 'authenticated');
+  using (public.is_admin());
+
+-- ── Storage ─────────────────────────────────────────────────
+
+insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+values ('marie-images', 'marie-images', true, 10485760,
+        array['image/jpeg', 'image/png', 'image/webp', 'image/gif'])
+on conflict (id) do nothing;
+
+create policy "Admin afbeeldingen uploaden"
+  on storage.objects for insert
+  with check (bucket_id = 'marie-images' and public.is_admin());
+
+create policy "Admin afbeeldingen wijzigen"
+  on storage.objects for update
+  using (bucket_id = 'marie-images' and public.is_admin());
+
+create policy "Admin afbeeldingen verwijderen"
+  on storage.objects for delete
+  using (bucket_id = 'marie-images' and public.is_admin());
+
+create policy "Admin afbeeldingen lezen"
+  on storage.objects for select
+  using (bucket_id = 'marie-images' and public.is_admin());

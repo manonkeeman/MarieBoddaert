@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "migrate": "node scripts/migrate-to-supabase.mjs"
+    "migrate": "node scripts/migrate-to-supabase.mjs",
+    "restore": "node scripts/restore-to-supabase.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.0",
