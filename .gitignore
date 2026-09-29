@@ -14,3 +14,4 @@ yarn-error.log*
 .vscode/*
 .env.local
 .env.local.oud
+.claude/settings.local.json
