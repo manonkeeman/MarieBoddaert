@@ -1,9 +1,6 @@
+import { createHash } from 'node:crypto'
 import type { NextRequest } from 'next/server'
-
-// Eenvoudige rate limit per IP-adres, in het geheugen van de serverless
-// functie. Niet waterdicht (elke instantie heeft z'n eigen teller), maar
-// genoeg om scripts die honderden verzoeken achter elkaar sturen af te remmen.
-const hits = new Map<string, number[]>()
+import { createSupabaseAdminClient } from '@/lib/supabase-server'
 
 export function clientIp(req: NextRequest): string {
   return (
@@ -13,7 +10,36 @@ export function clientIp(req: NextRequest): string {
   )
 }
 
-export function isRateLimited(key: string, limit: number, windowMs: number): boolean {
+// Rate limit per IP-adres, bijgehouden in de database (public.rate_limits)
+// zodat alle serverless instanties dezelfde teller delen. IP-adressen worden
+// alleen gehasht opgeslagen.
+export async function isRateLimited(
+  scope: string,
+  ip: string,
+  limit: number,
+  windowMs: number,
+): Promise<boolean> {
+  const key = `${scope}:${createHash('sha256').update(ip).digest('hex')}`
+
+  try {
+    const supabase = createSupabaseAdminClient()
+    const { data, error } = await supabase.rpc('hit_rate_limit', {
+      p_key: key,
+      p_limit: limit,
+      p_window_seconds: Math.round(windowMs / 1000),
+    })
+    if (error) throw error
+    return data === true
+  } catch {
+    // Database niet bereikbaar of functie ontbreekt: val terug op de
+    // teller in het geheugen van deze instantie
+    return isRateLimitedInMemory(key, limit, windowMs)
+  }
+}
+
+const hits = new Map<string, number[]>()
+
+function isRateLimitedInMemory(key: string, limit: number, windowMs: number): boolean {
   const now = Date.now()
   const recent = (hits.get(key) ?? []).filter(t => now - t < windowMs)
   recent.push(now)

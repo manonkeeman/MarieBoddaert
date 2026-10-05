@@ -23,7 +23,7 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
-    if (isRateLimited(`comment:${clientIp(req)}`, 5, 10 * 60 * 1000)) {
+    if (await isRateLimited('comment', clientIp(req), 5, 10 * 60 * 1000)) {
       return NextResponse.json({ error: 'Even geduld, probeer het later opnieuw' }, { status: 429 })
     }
 

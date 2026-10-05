@@ -27,7 +27,7 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
-    if (isRateLimited(`reaction:${clientIp(req)}`, 20, 10 * 60 * 1000)) {
+    if (await isRateLimited('reaction', clientIp(req), 20, 10 * 60 * 1000)) {
       return NextResponse.json({ error: 'Even geduld, probeer het later opnieuw' }, { status: 429 })
     }
 
