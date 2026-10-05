@@ -9,7 +9,7 @@ const CATEGORY_PATHS: Record<string, string> = {
 }
 
 export async function POST(request: Request) {
-  const supabase = createSupabaseServerClient()
+  const supabase = await createSupabaseServerClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) {
     return NextResponse.json({ error: 'Niet ingelogd' }, { status: 401 })

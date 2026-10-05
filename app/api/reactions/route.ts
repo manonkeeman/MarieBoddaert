@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createSupabaseAdminClient } from '@/lib/supabase-server'
+import { clientIp, isRateLimited } from '@/lib/rate-limit'
 
 const VALID_EMOJIS = ['❤️', '👏', '😂', '🌸', '✨', '🥺']
 
@@ -26,6 +27,10 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
+    if (isRateLimited(`reaction:${clientIp(req)}`, 20, 10 * 60 * 1000)) {
+      return NextResponse.json({ error: 'Even geduld, probeer het later opnieuw' }, { status: 429 })
+    }
+
     const { emoji, postSlug } = await req.json()
 
     if (!VALID_EMOJIS.includes(emoji) || !postSlug?.trim()) {
@@ -34,6 +39,16 @@ export async function POST(req: NextRequest) {
 
     const supabase = createSupabaseAdminClient()
     const slug = postSlug.trim()
+
+    const { data: post } = await supabase
+      .from('posts')
+      .select('slug')
+      .eq('slug', slug)
+      .eq('published', true)
+      .maybeSingle()
+    if (!post) {
+      return NextResponse.json({ error: 'Onbekende post' }, { status: 400 })
+    }
 
     // Upsert: maak aan als niet bestaat, verhoog teller
     const { data: existing } = await supabase

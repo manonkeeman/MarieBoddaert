@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createSupabaseAdminClient } from '@/lib/supabase-server'
+import { clientIp, isRateLimited } from '@/lib/rate-limit'
 
 export async function GET(req: NextRequest) {
   const slug = req.nextUrl.searchParams.get('slug')
@@ -22,7 +23,14 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
-    const { name, message, postSlug } = await req.json()
+    if (isRateLimited(`comment:${clientIp(req)}`, 5, 10 * 60 * 1000)) {
+      return NextResponse.json({ error: 'Even geduld, probeer het later opnieuw' }, { status: 429 })
+    }
+
+    const { name, message, postSlug, website } = await req.json()
+
+    // Honeypot: mensen zien dit veld niet, spambots vullen het wel in
+    if (website) return NextResponse.json({ ok: true })
 
     if (!name?.trim() || !message?.trim() || !postSlug?.trim()) {
       return NextResponse.json({ error: 'Vul alle velden in' }, { status: 400 })
@@ -32,6 +40,16 @@ export async function POST(req: NextRequest) {
     }
 
     const supabase = createSupabaseAdminClient()
+    const { data: post } = await supabase
+      .from('posts')
+      .select('slug')
+      .eq('slug', postSlug.trim())
+      .eq('published', true)
+      .maybeSingle()
+    if (!post) {
+      return NextResponse.json({ error: 'Onbekende post' }, { status: 400 })
+    }
+
     const { error } = await supabase.from('comments').insert({
       post_slug: postSlug.trim(),
       name:      name.trim(),

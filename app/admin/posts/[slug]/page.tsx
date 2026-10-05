@@ -5,12 +5,12 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = { title: 'Post bewerken' }
 
-export default async function EditPost({ params }: { params: { slug: string } }) {
+export default async function EditPost(props: { params: Promise<{ slug: string }> }) {
   const supabase = createSupabaseAdminClient()
   const { data: post } = await supabase
     .from('posts')
     .select('*')
-    .eq('slug', params.slug)
+    .eq('slug', (await props.params).slug)
     .single()
 
   if (!post) notFound()

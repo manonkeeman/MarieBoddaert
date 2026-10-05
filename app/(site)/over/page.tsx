@@ -3,6 +3,7 @@ import { FaInstagram, FaLinkedin, FaBlogger } from 'react-icons/fa'
 import { SiSubstack } from 'react-icons/si'
 import { createSupabaseAdminClient } from '@/lib/supabase-server'
 import ProfilePhoto from '@/components/ProfilePhoto'
+import { sanitize } from '@/lib/sanitize'
 
 export const revalidate = 3600
 
@@ -66,7 +67,7 @@ export default async function Over() {
 
         <div className="over-content">
           {hasBio ? (
-            <div className="over-block" dangerouslySetInnerHTML={{ __html: cms.bio }} />
+            <div className="over-block" dangerouslySetInnerHTML={{ __html: sanitize(cms.bio) }} />
           ) : (
             <>
               <div className="over-block">

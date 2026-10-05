@@ -5,6 +5,7 @@ import { getReadingTime } from '@/lib/utils'
 import ReactionBar from '@/components/ReactionBar'
 import CommentForm from '@/components/CommentForm'
 import type { Metadata } from 'next'
+import { sanitize } from '@/lib/sanitize'
 
 export const revalidate = 3600
 
@@ -19,8 +20,8 @@ export async function generateStaticParams() {
   return posts.map(p => ({ slug: p.slug }))
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const post = await getPostBySlug(params.slug)
+export async function generateMetadata(props: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const post = await getPostBySlug((await props.params).slug)
   if (!post) return { title: 'Marie H. Boddaert' }
   return {
     title: post.title,
@@ -38,8 +39,8 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   }
 }
 
-export default async function BlogPost({ params }: { params: { slug: string } }) {
-  const post = await getPostBySlug(params.slug)
+export default async function BlogPost(props: { params: Promise<{ slug: string }> }) {
+  const post = await getPostBySlug((await props.params).slug)
   if (!post) notFound()
 
   const minutes = getReadingTime(post.content)
@@ -77,7 +78,7 @@ export default async function BlogPost({ params }: { params: { slug: string } })
 
       <div className="blog-post">
         <Link href="/" className="back-link">← Terug</Link>
-        <div className="post-content" dangerouslySetInnerHTML={{ __html: post.content }} />
+        <div className="post-content" dangerouslySetInnerHTML={{ __html: sanitize(post.content) }} />
         <hr className="post-divider" />
         <ReactionBar postTitle={post.title} postSlug={post.slug} />
         <CommentForm postTitle={post.title} postSlug={post.slug} />

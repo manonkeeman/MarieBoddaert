@@ -11,8 +11,8 @@ export async function generateStaticParams() {
   return posts.map(p => ({ slug: p.slug }))
 }
 
-export default async function Image({ params }: { params: { slug: string } }) {
-  const post = await getPostBySlug(params.slug)
+export default async function Image(props: { params: Promise<{ slug: string }> }) {
+  const post = await getPostBySlug((await props.params).slug)
   const color    = post?.color    ?? '#FAD5DA'
   const title    = post?.title    ?? 'Marie H. Boddaert'
   const category = post?.category ?? ''

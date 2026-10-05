@@ -2,7 +2,7 @@ import { createServerClient } from '@supabase/ssr'
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   let response = NextResponse.next({ request: { headers: request.headers } })
 
   const supabase = createServerClient(
@@ -29,8 +29,20 @@ export async function middleware(request: NextRequest) {
   // Link uit de reset-mail: sessie komt pas client-side binnen
   const isResetPath = request.nextUrl.pathname === '/admin/wachtwoord'
 
-  if (isAdminPath && !isLoginPath && !isResetPath && !user) {
-    return NextResponse.redirect(new URL('/admin/login', request.url))
+  if (isAdminPath && !isLoginPath && !isResetPath) {
+    if (!user) {
+      return NextResponse.redirect(new URL('/admin/login', request.url))
+    }
+    // Ingelogd is niet genoeg: alleen gebruikers in public.admins mogen beheren
+    const { data: admin } = await supabase
+      .from('admins')
+      .select('user_id')
+      .eq('user_id', user.id)
+      .maybeSingle()
+    if (!admin) {
+      await supabase.auth.signOut()
+      return NextResponse.redirect(new URL('/admin/login', request.url))
+    }
   }
 
   if (isLoginPath && user) {

@@ -13,6 +13,7 @@ export default function CommentForm({ postTitle, postSlug }: { postTitle: string
   const [comments, setComments] = useState<Comment[]>([])
   const [name, setName] = useState('')
   const [message, setMessage] = useState('')
+  const [website, setWebsite] = useState('')
   const [status, setStatus] = useState<'idle' | 'loading' | 'sent' | 'error'>('idle')
 
   useEffect(() => {
@@ -29,7 +30,7 @@ export default function CommentForm({ postTitle, postSlug }: { postTitle: string
       const res = await fetch('/api/comments', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ name, message, postSlug }),
+        body:    JSON.stringify({ name, message, postSlug, website }),
       })
       if (res.ok) {
         setStatus('sent')
@@ -96,6 +97,17 @@ export default function CommentForm({ postTitle, postSlug }: { postTitle: string
               required
             />
           </div>
+          {/* Honeypot tegen spambots, onzichtbaar voor bezoekers */}
+          <input
+            type="text"
+            name="website"
+            value={website}
+            onChange={e => setWebsite(e.target.value)}
+            tabIndex={-1}
+            autoComplete="off"
+            aria-hidden="true"
+            style={{ position: 'absolute', left: '-9999px', width: 1, height: 1, opacity: 0 }}
+          />
           {status === 'error' && (
             <p className="comment-error">Er ging iets mis. Probeer het opnieuw.</p>
           )}
